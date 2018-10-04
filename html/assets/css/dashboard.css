@@ -1,6 +1,4 @@
-/*
-    DEMO STYLE
-*/
+
 
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 body {
@@ -131,12 +129,21 @@ a[aria-expanded="true"] {
 #tabla-encuesta{
     text-align:left;
     font-size: 15px;
-    margin: 70px auto;
+    margin: 0px auto;
     width: 85%;
 }
 
+
 #sidebarCollapse{
     float: left;
+}
+
+#titulo-tabla{
+    text-align:left;
+    font-size: 18px;
+    width: 85%;
+    margin: 60px auto 20px auto;
+
 }
 
 
