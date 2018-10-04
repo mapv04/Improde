@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<title>IMPRODE DASHBOARD</title>
+
+<!-- Bootstrap CSS CDN -->
+<link rel="stylesheet" href="assets/css/bootstrap.css">
+<!-- Our Custom CSS -->
+<link rel="stylesheet" href="assets/css/dashboard.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <img src="img/univaLogo.png" alt="" class="univa-logo">
+                <h3>IMPRODE</h3>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="Dashboard.html">Inicio</a>
+                </li>
+                <li class="active">
+                    <a href="#">Encuesta</a>
+                </li>
+
+                <li>
+                    <a href="#">Retroalimentacion</a>
+                </li>
+
+            </ul>
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="main">
+            <button type="button" id="sidebarCollapse" class="btn btn-light">
+                <img src="img/univaLogo.png" alt="" class="univa-logo"> MENU
+            </button>
+            <span>ENCUESTA</span>
+
+            <div></div>
+            <table class="table" id="tabla-encuesta">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col" style="width: 30%">Pregunta</th>
+                        <th scope="col" style="width: 70%">Respuesta</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Por cual medio te enteraste de reto zapopan?</th>
+                        <td><textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Platicanos de que se trata tu producto o servicio</th>
+                        <td><textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Que problematica resuelves con tu producto</th>
+                        <td><textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea></td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+            <button type="button" class="btn btn-primary btn-lg" >ENVIAR</button>
+        </div>
+
+    </div>
+
+
+
+
+    <!-- jQuery CDN - Slim version (=without AJAX) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+        crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+        crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+        });
+    </script>
+
+</body>
+
+</html>
