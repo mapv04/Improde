@@ -11,20 +11,17 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light" id="nav-bar">
-        <a class="navbar-brand" href="#"> <img src="/img/univaLogo.png" alt="" style="   height: auto; width: 39px; float: left; padding-right: 7px;">
+        <a class="navbar-brand"> <img src="/img/univaLogo.png" alt="" style="   height: auto; width: 39px; float: left; padding-right: 7px;">
             IMPRODE</a>
-        <div id="navbarText">
-            <ul class="nav navbar-rigth">
-                <li class="nav-item active">
-                    <form method="GET" action="/registro">
-                        <button id="boton">Registro</button>
-                    </form>
-                </li>
-            </ul>
-        </div>
-    </nav>
 
-    <form action="/" method="POST" class="form-signin text-center">
+            <form id="foo" method="GET" action="/registro">
+                <a href="" onclick="document.getElementById('foo').submit(); return false;" >Registro</a>
+            </form>
+    </nav>
+    
+
+    <form action="/login" method="POST" class="form-signin text-center"> 
+        <br><br>
         <h1 class="h3 mb-3 font-weight-normal">Iniciar Sesion</h1>
         <label for="inputEmail" class="sr-only">Correo</label>
         <input name="username" type="email" id="inputEmail" class="form-control" placeholder="Correo" required

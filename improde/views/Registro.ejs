@@ -11,13 +11,15 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light" id="nav-bar">
-        <a class="navbar-brand" href="Login.html"> <img  src="/img/univaLogo.png" alt="" style="   height: auto; width: 39px; float: left; padding-right: 7px;">
-            IMPRODE</a>
+        <form id="foo" method="GET" action="/login">
+            <a class="navbar-brand" href="" onclick="document.getElementById('foo').submit(); return false;">
+                <img src="/img/univaLogo.png" alt="" style="   height: auto; width: 39px; float: left; padding-right: 7px;">
+                IMPRODE</a>
+        </form>
     </nav>
 
     <div class="container ">
-        <form action="/agregarProyecto" method="POST" class="justify-content-center">
-
+        <form action="/registro" method="POST" >
             <div id="contain">
                 <p id="title">Datos del proyecto</p>
                 <div class="form-row ">
@@ -92,7 +94,7 @@
             </div>
 
 
-             <p id="subtitle">#2 Integrante del equipo</p>
+            <p id="subtitle">#2 Integrante del equipo</p>
             <div class="form-row " id="row-form">
                 <div class="form-group col-5 ">
                     <label for="Matricula">Matricula</label>
@@ -247,7 +249,6 @@
                 </div>
             </div>
 
-
             <p id="subtitle">#5 Integrante del equipo</p>
             <div class="form-row " id="row-form">
                 <div class="form-group col-5 ">
@@ -297,8 +298,8 @@
                     <label for="Nombre">Nombre</label>
                     <input name="nombre5" type="text" class="form-control" id="Nombre" required>
                 </div>
-            </div>  
-            <button class="btn btn-lg btn-primary"> Registrarse </button>
+            </div>
+            <button class="btn  btn-primary btn-lg" id="boton-guardar">Registrarse</button>
         </form>
     </div>
 </body>

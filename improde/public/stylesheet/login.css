@@ -24,7 +24,7 @@ body {
 
 #subtitle{
   text-align: center;
-  font-size: 20px;
+  font-size: 19px;
   font-weight: 700px;
   margin-bottom: 25px;
 }
@@ -44,6 +44,10 @@ body {
   cursor: pointer;
 }
 
+#boton-guardar{
+  display: block;
+  margin: 70px auto 120px auto;
+}
 
 #boton:hover {
   color :#5ec1ff;

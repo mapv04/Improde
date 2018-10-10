@@ -18,16 +18,15 @@
                 <img src="/img/univaLogo.png" alt="" class="univa-logo">
                 <h3>IMPRODE</h3>
             </div>
-
-          <ul class="list-unstyled components">
-                <li  class="active">
-                        <a >Postulación</a>
-                    </li>
-                <li>
-                    <a action="/misdatos">Mis Datos</a>
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="">Postulación</a>
                 </li>
                 <li>
-                    <a action="/recursos">Recursos</a>
+                    <a href="/misdatos">Mis Datos</a>
+                </li>
+                <li>
+                    <a href="/recursos">Recursos</a>
                 </li>
             </ul>
         </nav>
@@ -40,33 +39,52 @@
             <span>Postulación</span>
 
             <div id="titulo-tabla">Contesta las siguientes preguntas</div>
-            <table class="table" id="tabla-encuesta">
-                <thead class="thead-light">
-                    <tr>
-                        <th scope="col" style="width: 30%">Pregunta</th>
-                        <th scope="col" style="width: 70%">Respuesta</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td scope="row">Por cual medio te enteraste de reto zapopan?</td>
-                        <td><textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea></td>
-                    </tr>
-                    <tr>
-                        <td scope="row">Platicanos de que se trata tu producto o servicio</td>
-                        <td><textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea></td>
-                    </tr>
-                    <tr>
-                        <td scope="row">Que problematica resuelves con tu producto</td>
-                        <td><textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea></td>
-                    </tr>
-                </tbody>
-            </table>
-
-
-            <button type="button" class="btn btn-primary btn-lg">ENVIAR</button>
+            <form action="/postulacion" method="POST">
+                <table class="table" id="tabla-encuesta">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col" style="width: 30%">Pregunta</th>
+                            <th scope="col" style="width: 70%">Respuesta</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td scope="row">¿Qué producto o servicio produces?</td>
+                            <td><textarea name="respuesta1" class="form-control" id="exampleFormControlTextarea1" rows="5"><%=respuesta1 %></textarea></td>
+                        </tr>
+                        <tr>
+                            <td scope="row">¿Por qué consideras que la solución que propones es innovadora o cuenta con un valor agregado?</td>
+                            <td><textarea name="respuesta2" class="form-control" id="exampleFormControlTextarea1" rows="5"><%= respuesta2 %></textarea></td>
+                        </tr>
+                        <tr>
+                            <td scope="row">¿Qué problemática resuelves con tu producto o servicio?</td>
+                            <td><textarea name="respuesta3" class="form-control" id="exampleFormControlTextarea1" rows="5"><%= respuesta3 %></textarea></td>
+                        </tr>
+                        <tr>
+                            <td scope="row">¿Quiénes, cuantos y en donde se beneficiarán con tú propuesta? </td>
+                            <td><textarea  name="respuesta4" class="form-control" id="exampleFormControlTextarea1" rows="5"><%= respuesta4 %></textarea></td>
+                        </tr>
+                        <tr>
+                            <td scope="row">¿Te consideras un emprendedor? ¿Por qué? </td>
+                            <td><textarea name="respuesta5" class="form-control" id="exampleFormControlTextarea1" rows="5"><%= respuesta5 %></textarea></td>
+                        </tr>
+                        <tr>
+                            <td scope="row">¿Qué mensaje le darías al cliente para promover el servicio que propones?
+                            </td>
+                            <td><textarea name="respuesta6" class="form-control" id="exampleFormControlTextarea1" rows="5"><%= respuesta6 %></textarea></td>
+                        </tr>
+                        <tr>
+                            <td scope="row"> Te invitamos a que presentes tu proyecto y tu equipo en un video de no más de 2 minutos 
+                                <br><br>
+                                Nota: puedes subirlo a cualquier plataforma de videos como youtube y poner el link en el espacio de texto, por ejemplo: https://www.youtube.com/watch?v=klVWGHtRTuE
+                            </td>
+                            <td><textarea name="respuesta7" class="form-control" id="exampleFormControlTextarea1" rows="5"><%= respuesta7 %></textarea></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="btn btn-primary btn-lg" id="boton-guardar">Guardar</button>
+            </form>
         </div>
-
     </div>
 
 
