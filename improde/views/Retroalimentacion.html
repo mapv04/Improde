@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>IMPRODE DASHBOARD</title>
+
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="/public/stylesheet/assets/css/bootstrap.css">
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="/public/stylesheet/dashboard.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <img src="img/univaLogo.png" alt="" class="univa-logo">
+                <h3>IMPRODE</h3>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li>
+                    <a href="Dashboard.html">Inicio</a>
+                </li>
+                <li>
+                    <a href="Encuesta.html">Encuesta</a>
+                </li>
+                <li class="active">
+                    <a href="#">Retroalimentacion</a>
+                </li>
+
+                <li>
+                    <a href="DatosPersonales.html">Mis Datos</a>
+                </li>
+
+                <li>
+                    <a href="Recursos.html">Recursos</a>
+                </li>
+
+            </ul>
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="main">
+            <button type="button" id="sidebarCollapse" class="btn btn-light">
+                <img src="img/univaLogo.png" alt="" class="univa-logo"> MENU
+            </button>
+            <span>RETROALIMENTACION</span>
+
+
+            <div id="titulo-tabla">CRITERIO: Consideras que este equipo debe de estar en reto zapopan</div>
+            <table class="table" id="tabla-encuesta">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col" style="width: 10%">Jurado</th>
+                        <th scope="col" style="width: 90%">Retroalimentacion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td scope="row">#1</td>
+                        <td> Si
+                        </td>
+                    </tr>
+                    <tr>
+                        <td scope="row">#2</td>
+                        <td> Si
+                        </td>
+                    </tr>
+                    <tr>
+                        <td scope="row">#3</td>
+                        <td> Si
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+
+            <div id="titulo-tabla">CRITERIO: Retroalimentacion</div>
+            <table class="table" id="tabla-encuesta">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col" style="width: 10%">Jurado</th>
+                        <th scope="col" style="width: 90%">Retroalimentacion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td scope="row">#1</td>
+                        <td>Para mi consideracion el equipo le falto entusiasmo para demostrar como se tiene que hacer
+                            las cosas
+                            todo esto se relaciona con la actitud que se tiene hacia lo que se quiere le falto mas
+                            entusiasmo para
+                            demostrar como se tiene que hacer las cosas
+                        </td>
+                    </tr>
+                    <tr>
+                        <td scope="row">#2</td>
+                        <td>Para mi consideracion el equipo le falto entusiasmo para demostrar como se tiene que hacer
+                            las cosas
+                            todo esto se relaciona con la actitud que se tiene hacia lo que se quiere le falto mas
+                            entusiasmo para
+                            demostrar como se tiene que hacer las cosas
+                        </td>
+                    </tr>
+                    <tr>
+                        <td scope="row">#3</td>
+                        <td>Para mi consideracion el equipo le falto entusiasmo para demostrar como se tiene que hacer
+                            las cosas
+                            todo esto se relaciona con la actitud que se tiene hacia lo que se quiere le falto mas
+                            entusiasmo para
+                            demostrar como se tiene que hacer las cosas
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+
+
+
+    <!-- jQuery CDN - Slim version (=without AJAX) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+        crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+        crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login Improde</title>
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="/stylesheet/bootstrap.css">
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="/stylesheet/login.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light" id="nav-bar">
+        <a class="navbar-brand" href="#"> <img src="/img/univaLogo.png" alt="" style="   height: auto; width: 39px; float: left; padding-right: 7px;">
+            IMPRODE</a>
+        <div id="navbarText">
+            <ul class="nav navbar-rigth">
+                <li class="nav-item active">
+                    <form method="GET" action="/registro">
+                        <button id="boton">Registro</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <form action="/" method="POST" class="form-signin text-center">
+        <h1 class="h3 mb-3 font-weight-normal">Iniciar Sesion</h1>
+        <label for="inputEmail" class="sr-only">Correo</label>
+        <input name="username" type="email" id="inputEmail" class="form-control" placeholder="Correo" required
+            autofocus>
+
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <button class="btn btn-lg btn-primary btn-block">Entrar</button>
+    </form>
+</body>
+
+</html>

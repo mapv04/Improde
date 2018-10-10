@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Registro Improde</title>
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="/stylesheet/bootstrap.css" type="text/css">
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="/stylesheet/login.css" type="text/css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light" id="nav-bar">
+        <a class="navbar-brand" href="Login.html"> <img  src="/img/univaLogo.png" alt="" style="   height: auto; width: 39px; float: left; padding-right: 7px;">
+            IMPRODE</a>
+    </nav>
+
+    <div class="container ">
+        <form action="/agregarProyecto" method="POST" class="justify-content-center">
+
+            <div id="contain">
+                <p id="title">Datos del proyecto</p>
+                <div class="form-row ">
+                    <div class="form-group col-lg-6 ">
+                        <label for="inputEmail4">Email</label>
+                        <input name="email" type="email" class="form-control" id="inputEmail4" required>
+                    </div>
+                    <div class="form-group col-lg-6 ">
+                        <label for="inputPassword4">Password</label>
+                        <input name="password" type="password" class="form-control" id="inputPassword4" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-lg-12">
+                        <label for="proyecto">Nombre del proyecto</label>
+                        <input name="nombreProyecto" type="text" class="form-control" id="proyecto" required>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="title">Datos del equipo</div>
+            <p id="subtitle">#1 Representante del equipo</p>
+            <div class="form-row " id="row-form">
+                <div class="form-group col-5 ">
+                    <label for="Matricula">Matricula</label>
+                    <input name="matricula1" type="text" class="form-control" id="Matricula" required pattern="\d+"
+                        title="Solo números son aceptados">
+                </div>
+                <div class="form-group col-5 ">
+                    <label for="Licenciatura">Licenciatura</label>
+                    <select name="licenciatura1" class="form-control" id="exampleFormControlSelect1" required>
+                        <option>Administración de Empresas</option>
+                        <option>Administración e Innovación de Negocios</option>
+                        <option>Animación, Arte Digital y Multimedia</option>
+                        <option>Arquitecto</option>
+                        <option>Ciencias de la Comunicación</option>
+                        <option>Comercio y Logística Internacional</option>
+                        <option>Comercio y Negocios Internacionales</option>
+                        <option>Contaduría Publica</option>
+                        <option>Contaduría, Fiscal y Finanzas</option>
+                        <option>Criminología y Criminalística</option>
+                        <option>Derecho</option>
+                        <option>Diseño Gráfico</option>
+                        <option>Enseñanza y Gestión del Ingles</option>
+                        <option>Filosofía</option>
+                        <option>Finanzas</option>
+                        <option>Gestión de Empresas Turísticas</option>
+                        <option>Gestión de la Cadena de Suministro</option>
+                        <option>Industrial</option>
+                        <option>Mecatrónica</option>
+                        <option>Médico Cirujano</option>
+                        <option>Mercadotecnia</option>
+                        <option>Nutrición</option>
+                        <option>Producción de Medios Audiovisuales</option>
+                        <option>Psicología</option>
+                        <option>Publicidad</option>
+                        <option>Relaciones Internacionales</option>
+                        <option>Sistemas Computacionales</option>
+                        <option>Sistemas y Tecnologías de la Información</option>
+                        <option>Teología</option>
+                    </select>
+                </div>
+                <div class="form-group col-2 ">
+                    <label for="Cuatrimestre">Cuatrimestre</label>
+                    <input name="cuatrimestre1" type="number" class="form-control" id="Cuatrimestre" min="1" required>
+                </div>
+                <div class="form-group col-12">
+                    <label for="Nombre">Nombre</label>
+                    <input name="nombre1" type="text" class="form-control" id="Nombre" required>
+                </div>
+            </div>
+
+
+             <p id="subtitle">#2 Integrante del equipo</p>
+            <div class="form-row " id="row-form">
+                <div class="form-group col-5 ">
+                    <label for="Matricula">Matricula</label>
+                    <input name="matricula2" type="text" class="form-control" id="Matricula" required pattern="\d+"
+                        title="Solo números son aceptados">
+                </div>
+                <div class="form-group col-5 ">
+                    <label for="Licenciatura">Licenciatura</label>
+                    <select name="licenciatura2" class="form-control" id="exampleFormControlSelect1" required>
+                        <option>Administración de Empresas</option>
+                        <option>Administración e Innovación de Negocios</option>
+                        <option>Animación, Arte Digital y Multimedia</option>
+                        <option> Arquitecto</option>
+                        <option>Ciencias de la Comunicación</option>
+                        <option>Comercio y Logística Internacional</option>
+                        <option>Comercio y Negocios Internacionales</option>
+                        <option>Contaduría Publica</option>
+                        <option>Contaduría, Fiscal y Finanzas</option>
+                        <option>Criminología y Criminalística</option>
+                        <option>Derecho</option>
+                        <option>Diseño Gráfico</option>
+                        <option>Enseñanza y Gestión del Ingles</option>
+                        <option>Filosofía</option>
+                        <option>Finanzas</option>
+                        <option>Gestión de Empresas Turísticas</option>
+                        <option>Gestión de la Cadena de Suministro</option>
+                        <option>Industrial</option>
+                        <option>Mecatrónica</option>
+                        <option>Médico Cirujano</option>
+                        <option>Mercadotecnia</option>
+                        <option>Nutrición</option>
+                        <option>Producción de Medios Audiovisuales</option>
+                        <option>Psicología</option>
+                        <option>Publicidad</option>
+                        <option>Relaciones Internacionales</option>
+                        <option>Sistemas Computacionales</option>
+                        <option>Sistemas y Tecnologías de la Información</option>
+                        <option>Teología</option>
+                    </select>
+                </div>
+                <div class="form-group col-2 ">
+                    <label for="Cuatrimestre">Cuatrimestre</label>
+                    <input name="cuatrimestre2" type="number" class="form-control" id="Cuatrimestre" min="1" required>
+                </div>
+                <div class="form-group col-12">
+                    <label for="Nombre">Nombre</label>
+                    <input name="nombre2" type="text" class="form-control" id="Nombre" required>
+                </div>
+            </div>
+
+
+            <p id="subtitle">#3 Integrante del equipo</p>
+            <div class="form-row " id="row-form">
+                <div class="form-group col-5 ">
+                    <label for="Matricula">Matricula</label>
+                    <input name="matricula3" type="text" class="form-control" id="Matricula" required pattern="\d+"
+                        title="Solo números son aceptados">
+                </div>
+                <div class="form-group col-5 ">
+                    <label for="Licenciatura">Licenciatura</label>
+                    <select name="licenciatura3" class="form-control" id="exampleFormControlSelect1" required>
+                        <option>Administración de Empresas</option>
+                        <option>Administración e Innovación de Negocios</option>
+                        <option>Animación, Arte Digital y Multimedia</option>
+                        <option> Arquitecto</option>
+                        <option>Ciencias de la Comunicación</option>
+                        <option>Comercio y Logística Internacional</option>
+                        <option>Comercio y Negocios Internacionales</option>
+                        <option>Contaduría Publica</option>
+                        <option>Contaduría, Fiscal y Finanzas</option>
+                        <option>Criminología y Criminalística</option>
+                        <option>Derecho</option>
+                        <option>Diseño Gráfico</option>
+                        <option>Enseñanza y Gestión del Ingles</option>
+                        <option>Filosofía</option>
+                        <option>Finanzas</option>
+                        <option>Gestión de Empresas Turísticas</option>
+                        <option>Gestión de la Cadena de Suministro</option>
+                        <option>Industrial</option>
+                        <option>Mecatrónica</option>
+                        <option>Médico Cirujano</option>
+                        <option>Mercadotecnia</option>
+                        <option>Nutrición</option>
+                        <option>Producción de Medios Audiovisuales</option>
+                        <option>Psicología</option>
+                        <option>Publicidad</option>
+                        <option>Relaciones Internacionales</option>
+                        <option>Sistemas Computacionales</option>
+                        <option>Sistemas y Tecnologías de la Información</option>
+                        <option>Teología</option>
+                    </select>
+                </div>
+                <div class="form-group col-2 ">
+                    <label for="Cuatrimestre">Cuatrimestre</label>
+                    <input name="cuatrimestre3" type="number" class="form-control" id="Cuatrimestre" min="1" required>
+                </div>
+                <div class="form-group col-12">
+                    <label for="Nombre">Nombre</label>
+                    <input name="nombre3" type="text" class="form-control" id="Nombre" required>
+                </div>
+            </div>
+
+
+            <p id="subtitle">#4 Integrante del equipo</p>
+            <div class="form-row " id="row-form">
+                <div class="form-group col-5 ">
+                    <label for="Matricula">Matricula</label>
+                    <input name="matricula4" type="text" class="form-control" id="Matricula" required pattern="\d+"
+                        title="Solo números son aceptados">
+                </div>
+                <div class="form-group col-5 ">
+                    <label for="Licenciatura">Licenciatura</label>
+                    <select name="licenciatura4" class="form-control" id="exampleFormControlSelect1" required>
+                        <option>Administración de Empresas</option>
+                        <option>Administración e Innovación de Negocios</option>
+                        <option>Animación, Arte Digital y Multimedia</option>
+                        <option> Arquitecto</option>
+                        <option>Ciencias de la Comunicación</option>
+                        <option>Comercio y Logística Internacional</option>
+                        <option>Comercio y Negocios Internacionales</option>
+                        <option>Contaduría Publica</option>
+                        <option>Contaduría, Fiscal y Finanzas</option>
+                        <option>Criminología y Criminalística</option>
+                        <option>Derecho</option>
+                        <option>Diseño Gráfico</option>
+                        <option>Enseñanza y Gestión del Ingles</option>
+                        <option>Filosofía</option>
+                        <option>Finanzas</option>
+                        <option>Gestión de Empresas Turísticas</option>
+                        <option>Gestión de la Cadena de Suministro</option>
+                        <option>Industrial</option>
+                        <option>Mecatrónica</option>
+                        <option>Médico Cirujano</option>
+                        <option>Mercadotecnia</option>
+                        <option>Nutrición</option>
+                        <option>Producción de Medios Audiovisuales</option>
+                        <option>Psicología</option>
+                        <option>Publicidad</option>
+                        <option>Relaciones Internacionales</option>
+                        <option>Sistemas Computacionales</option>
+                        <option>Sistemas y Tecnologías de la Información</option>
+                        <option>Teología</option>
+                    </select>
+                </div>
+                <div class="form-group col-2 ">
+                    <label for="Cuatrimestre">Cuatrimestre</label>
+                    <input name="cuatrimestre4" type="number" class="form-control" id="Cuatrimestre" min="1" required>
+                </div>
+                <div class="form-group col-12">
+                    <label for="Nombre">Nombre</label>
+                    <input name="nombre4" type="text" class="form-control" id="Nombre" required>
+                </div>
+            </div>
+
+
+            <p id="subtitle">#5 Integrante del equipo</p>
+            <div class="form-row " id="row-form">
+                <div class="form-group col-5 ">
+                    <label for="Matricula">Matricula</label>
+                    <input name="matricula5" type="text" class="form-control" id="Matricula" required pattern="\d+"
+                        title="Solo números son aceptados">
+                </div>
+                <div class="form-group col-5 ">
+                    <label for="Licenciatura">Licenciatura</label>
+                    <select name="licenciatura5" class="form-control" id="exampleFormControlSelect1" required>
+                        <option>Administración de Empresas</option>
+                        <option>Administración e Innovación de Negocios</option>
+                        <option>Animación, Arte Digital y Multimedia</option>
+                        <option> Arquitecto</option>
+                        <option>Ciencias de la Comunicación</option>
+                        <option>Comercio y Logística Internacional</option>
+                        <option>Comercio y Negocios Internacionales</option>
+                        <option>Contaduría Publica</option>
+                        <option>Contaduría, Fiscal y Finanzas</option>
+                        <option>Criminología y Criminalística</option>
+                        <option>Derecho</option>
+                        <option>Diseño Gráfico</option>
+                        <option>Enseñanza y Gestión del Ingles</option>
+                        <option>Filosofía</option>
+                        <option>Finanzas</option>
+                        <option>Gestión de Empresas Turísticas</option>
+                        <option>Gestión de la Cadena de Suministro</option>
+                        <option>Industrial</option>
+                        <option>Mecatrónica</option>
+                        <option>Médico Cirujano</option>
+                        <option>Mercadotecnia</option>
+                        <option>Nutrición</option>
+                        <option>Producción de Medios Audiovisuales</option>
+                        <option>Psicología</option>
+                        <option>Publicidad</option>
+                        <option>Relaciones Internacionales</option>
+                        <option>Sistemas Computacionales</option>
+                        <option>Sistemas y Tecnologías de la Información</option>
+                        <option>Teología</option>
+                    </select>
+                </div>
+                <div class="form-group col-2 ">
+                    <label for="Cuatrimestre">Cuatrimestre</label>
+                    <input name="cuatrimestre5" type="number" class="form-control" id="Cuatrimestre" min="1" required>
+                </div>
+                <div class="form-group col-12">
+                    <label for="Nombre">Nombre</label>
+                    <input name="nombre5" type="text" class="form-control" id="Nombre" required>
+                </div>
+            </div>  
+            <button class="btn btn-lg btn-primary"> Registrarse </button>
+        </form>
+    </div>
+</body>
+
+</html>
