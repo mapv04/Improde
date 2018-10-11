@@ -67,16 +67,6 @@ INSERT INTO pregunta VALUES
 
 /* TESTING PURPOSES
 
-	INSERT INTO respuesta_proyecto VALUES
-	(15, 1, 'test1'),
-	(15, 3, 'test3');
-
-60000 * 30
-
- HMiejHqFN1uIIzxon4tcjNñ == $2b$08$b.fSCZ97tDvZbPZa5C3b6OfSLT4xjZrixAliS6.5ikTvB7GKI39om
- 
- HMiejHqFN1uIIzxon4tcjNñ
- $2b$08$XKTqzsDXMR.AcTjoy/3Rsu5Ru63mWGCGv.9PtJjztfhCbeJYMc.n6
 
 select * from alumnos;
 select * from proyecto;
@@ -92,6 +82,15 @@ delete from representante;
 delete from alumnos;
 delete from respuesta_proyecto;
 delete from proyecto;
+
+
++],}Nr$6s)=-b3`v5$i8lIñ@
+d/gr6Cñ@#k+%@jE<U\
+10800000
+
+SELECT *  FROM alumnos a INNER JOIN equipo e ON a.matricula = e.matricula WHERE e.id_proyecto = 1;
 */
+
+
 
 

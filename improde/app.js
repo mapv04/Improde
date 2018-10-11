@@ -107,6 +107,20 @@ app.post('/registro', (req, res) => {
     let sqlEquipo = 'INSERT INTO equipo (id_proyecto, matricula) VALUES ?';
     let sqlRespuesta = 'INSERT INTO respuesta_proyecto (id_proyecto, id_pregunta, respuesta) VALUES ?';
 
+    let m1 = Number (req.body.matricula1);
+    let m2 = Number (req.body.matricula2);
+    let m3 = Number (req.body.matricula3);
+    let m4 = Number (req.body.matricula4);
+    let m5 = Number (req.body.matricula5);
+
+    if( m1===m2||m1===m3||m1===m4||m1===m5 ||
+        m2===m3||m2===m4||m2===m5 ||
+        m3===m4||m3===m5 ||
+        m4===m5){
+        res.render('Registro.ejs', { error: true, errorMessage: 'LAS MATRICULAS TIENEN QUE SER DIFERENTES ENTRE INTEGRANTES' });
+        return;
+    }
+
     
     con.query(checkProyecto, [req.body.nombreProyecto.toLowerCase()], (err, result) => {
         if (err) {
@@ -225,7 +239,7 @@ app.post('/registro', (req, res) => {
                 console.log(err);
                 return;
             }
-            res.redirect('/login');
+            res.render('RegistroCorrecto.ejs');
         });
 
     }

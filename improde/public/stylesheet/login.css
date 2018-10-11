@@ -22,11 +22,30 @@ body {
   padding-bottom: 8px;
 }
 
+#registro-correcto{
+  text-align: center;
+  font-size: 25px;
+  margin: 50px auto;
+  width: 85%;
+
+}
+
+#registro-correcto button{
+  width: 250px;
+  margin: 10px auto;
+}
+
 #registro{
   float: right;
   font-size: 17px;
   color: #0075bc;
   margin-right: 20px;
+}
+
+#improde-login{
+  text-decoration: none;
+  font-size: 18px;
+  color: black;
 }
 
 #registro:hover{
