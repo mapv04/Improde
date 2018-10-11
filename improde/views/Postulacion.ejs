@@ -37,10 +37,81 @@
                 <img src="/img/univaLogo.png" alt="" class="univa-logo"> MENU
             </button>
             <span>Postulación</span>
+            <span id="logout"><a href="/logout">Cerrar Sesión</a></span>
 
             <div id="titulo-tabla">Contesta las siguientes preguntas</div>
             <form action="/postulacion" method="POST">
-                <table class="table" id="tabla-encuesta">
+                <table class="table" id="tabla-postulacion">
+                    <tbody>
+                        <tr class="thead-light">
+                            <th scope="row" colspan="2">
+                                Modelo de Impacto <br>
+                                ¿Qué tipo de impacto quieres tener como empresa/organización (impacto social, impacto
+                                personal, impacto local, impacto en una comunidad, impacto ambiental, etc.)? <br>
+                                ¿Cómo mides tu impacto?
+                            </th>
+                        </tr>
+                        <tr>
+                            <td scope="row" colspan="2"><textarea name="respuesta1" class="form-control" rows="5"><%=respuesta1 %></textarea></td>
+                        </tr>
+
+
+                        <tr class="thead-light">
+                            <th scope="row" style="width: 50%">
+                                Propuesta de valor<br>
+                                ¿Qué hace única la propuesta de tu organización? <br>
+                                ¿Quién más está en el espacio que te
+                                interesa, y por qué eres mejor?
+                            </th>
+                            <th scope="row" style="width: 50%">
+                                Aliados<br>
+                                ¿Con quién trabajas para crear impacto positivo para tu negocio o para el contexto en
+                                general? <br>
+                                ¿Con quién no trabajarías?<br>
+                                ¿Quiénes son tus clientes, fundadores y red de contactos?
+                            </th>
+                        </tr>
+                        <tr class="thead-light">
+                            <td scope="row"><textarea name="respuesta2" class="form-control" rows="6"><%= respuesta2 %></textarea></td>
+                            <td scope="row"><textarea name="respuesta3" class="form-control" rows="6"><%= respuesta3 %></textarea></td>
+                        </tr>
+
+
+                        <tr class="thead-light">
+                            <th scope="row">
+                                Productos y Servicios<br>
+                                ¿Qué estas creando? <br>
+                                ¿Cómo te aseguras que tu producto o servicio funciona bien, y produce el impacto que
+                                estas esperando lograr?
+                            </th>
+                            <th scope="row">
+                                Talento y Modelo Operacional<br>
+                                ¿Quién hace el trabajo? <br>
+                                ¿Cómo necesitan ser el organigrama organizacional y la estructura de costos de tu
+                                organización para lograr las metas interpuestas en tu modelo
+                                de impacto y propuesta de valor?
+                            </th>
+                        </tr>
+                        <tr class="thead-light">
+                            <td scope="row"><textarea name="respuesta4" class="form-control" rows="6"><%= respuesta4 %></textarea></td>
+                            <td scope="row"><textarea name="respuesta5" class="form-control" rows="6"><%= respuesta5 %></textarea></td>
+                        </tr>
+
+
+                        <tr class="thead-light">
+                                <th scope="row" colspan="2">
+                                    Modelo de ventas<br>
+                                    ¿Cómo se financia tu trabajo?<br>
+                                    ¿Cómo se puede financiarse creativamente?
+                                </th>
+                            </tr>
+                            <tr>
+                                <td scope="row" colspan="2"><textarea name="respuesta6" class="form-control"  rows="5"><%= respuesta6 %></textarea></td>
+                            </tr>
+                    </tbody>
+                </table>
+
+               <table class="table" id="tabla-postulacion">
                     <thead class="thead-light">
                         <tr>
                             <th scope="col" style="width: 35%">Pregunta</th>
@@ -48,52 +119,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td scope="row">Modelo de Impacto <br>
-                                ¿Qué tipo de impacto quieres tener como empresa/organización (impacto social, impacto
-                                personal, impacto local, impacto en una comunidad, impacto ambiental, etc.)? ¿Cómo
-                                mides tu impacto? <br><br>
-                            </td>
-                            <td><textarea name="respuesta1" class="form-control" id="exampleFormControlTextarea1" rows="5"><%=respuesta1 %></textarea></td>
-                        </tr>
-                        <tr>
-                            <td scope="row">Propuesta de valor<br>
-                                ¿Qué hace única la propuesta de tu organización? ¿Quién más está en el espacio que te
-                                interesa, y por qué eres mejor?
-                            </td>
-                            <td><textarea name="respuesta2" class="form-control" id="exampleFormControlTextarea1" rows="5"><%= respuesta2 %></textarea></td>
-                        </tr>
-                        <tr>
-                            <td scope="row">Aliados<br>
-                                ¿Con quién trabajas para crear impacto positivo para tu negocio o para el contexto en
-                                general? ¿Con quién no trabajarías? ¿Quiénes son tus clientes, fundadores y red de
-                                contactos? <br><br>
-                            </td>
-                            <td><textarea name="respuesta3" class="form-control" id="exampleFormControlTextarea1" rows="5"><%= respuesta3 %></textarea></td>
-                        </tr>
-                        <tr>
-                            <td scope="row">Productos y Servicios<br>
-                                ¿Qué estas creando? ¿Cómo te aseguras que tu producto o servicio funciona bien, y
-                                produce el impacto que estas esperando lograr? <br><br>
-                            </td>
-                            <td><textarea name="respuesta4" class="form-control" id="exampleFormControlTextarea1" rows="5"><%= respuesta4 %></textarea></td>
-                        </tr>
-                        <tr>
-                            <td scope="row">Talento y Modelo Operacional<br>
-                                ¿Quién hace el trabajo? ¿Cómo necesitan ser el organigrama organizacional y la
-                                estructura de costos de tu organización para lograr las metas interpuestas en tu modelo
-                                de impacto y propuesta de valor? <br><br>
-                            </td>
-                            <td><textarea name="respuesta5" class="form-control" id="exampleFormControlTextarea1" rows="5"><%= respuesta5 %></textarea></td>
-                        </tr>
-
-                        <tr>
-                            <td scope="row">Modelo de ventas<br>
-                                ¿Cómo se financia tu trabajo? ¿Cómo se puede financiarse creativamente?
-                            </td>
-                            <td><textarea name="respuesta6" class="form-control" id="exampleFormControlTextarea1" rows="5"><%= respuesta6 %></textarea></td>
-                        </tr>
-
                         <tr>
                             <td scope="row">¿Te consideras un emprendedor? ¿Por qué? </td>
                             <td><textarea name="respuesta7" class="form-control" id="exampleFormControlTextarea1" rows="5"><%= respuesta7 %></textarea></td>
@@ -114,6 +139,7 @@
                         </tr>
                     </tbody>
                 </table>
+
                 <button class="btn btn-primary btn-lg" id="boton-guardar">Guardar</button>
             </form>
         </div>

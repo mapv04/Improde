@@ -48,10 +48,30 @@ passport.use(new localStrategy(
 ));
 
 
-app.get('/registro', (req, res) => res.render('Registro.ejs',{error: false, errorMessage: ''}));
-app.get('/login', (req, res) => res.render('Login.ejs'));
+app.get('/registro', (req, res) => res.render('Registro.ejs', { error: false, errorMessage: '' }));
+app.get('/login', (req, res) => res.render('Login.ejs',{error: false}));
+app.get('/loginFailed', (req, res) => res.render('Login.ejs',{error: true}));
 app.get('/recursos', authenticationMiddleware(), (req, res) => res.render('Recursos.ejs'));
-app.get('/misdatos', authenticationMiddleware(), (req, res) => res.render('DatosPersonales.ejs'));
+
+app.get('/logout', (req, res) => {
+    req.logout();
+    req.session.destroy();
+    res.redirect('/login');
+});
+
+app.get('/misdatos', authenticationMiddleware(), (req, res) => {
+    let idProyecto = req.session.passport.user.id_proyecto;
+    let sql = 'SELECT *  FROM alumnos a INNER JOIN equipo e ON a.matricula = e.matricula WHERE e.id_proyecto = ? ';
+    let alumnos = {};
+    con.query(sql, [idProyecto], (err, results) => {
+        if (err) console.log(err);
+        if(results){
+           alumnos =  results;
+        }
+        res.render('DatosPersonales.ejs',{alumnos: alumnos})
+    });
+    
+});
 
 app.get('/', authenticationMiddleware(), (req, res) => {
     let idProyecto = req.session.passport.user.id_proyecto;
@@ -87,37 +107,53 @@ app.post('/registro', (req, res) => {
     let sqlEquipo = 'INSERT INTO equipo (id_proyecto, matricula) VALUES ?';
     let sqlRespuesta = 'INSERT INTO respuesta_proyecto (id_proyecto, id_pregunta, respuesta) VALUES ?';
 
-    let nombreProyectoTest = req.body.nombreProyecto;
-    let nombreCorreoTest = req.body.email;
-
-    con.query(checkProyecto, [nombreProyectoTest], (err, result) => {
+    
+    con.query(checkProyecto, [req.body.nombreProyecto.toLowerCase()], (err, result) => {
         if (err) {
             console.log(err);
-            res.redirect('/registro');
+            res.render('Registro.ejs', { error: true, errorMessage: 'Error intenta de nuevo' });
+            return;
         }
-        console.log(result[0]);
         if (result[0]) {
-            console.log('ENTER IN PROYECTO DUPLICATED')
-            res.redirect('/login');
-//            res.render('Registro.ejs',{error: true, errorMessage: 'Nombre del proyecto ya existe recuerda solo UN registro es necesario por equipo'});
+ //           console.log('ENTER IN PROYECTO DUPLICATED');
+            res.render('Registro.ejs', { error: true, errorMessage: 'EL NOMBRE DEL PROYECTO YA EXISTE RECUERDA SOLO UN REGISTRO POR EQUIPO ES NECESARIO' });
+            return;
         }
 
-        con.query(checkCorreo, [nombreCorreoTest], (err, result2) => {
+        con.query(checkCorreo, [req.body.email.toLowerCase()], (err, result2) => {
             if (err) {
                 console.log(err);
-                res.redirect('/registro');
+                res.render('Registro.ejs', { error: true, errorMessage: 'Error intenta de nuevo' });
+                return;
             }
-            console.log(result2[0]);
             if (result2[0]) {
-                console.log('ENTER IN CORREO DUPLICATED')
-                res.redirect('/login');
-//                res.render('Registro.ejs',{error: true, errorMessage: 'Correo ya existe recuerda solo UN registro es necesario por equipo'});
+ //               console.log('ENTER IN CORREO DUPLICATED');
+                res.render('Registro.ejs', { error: true, errorMessage: 'EL CORREO YA EXISTE RECUERDA SOLO UN REGISTRO POR EQUIPO ES NECESARIO' });
+                return;
             }
-            password();
+
+            let matriculaCheck = [
+                Number (req.body.matricula1),
+                Number (req.body.matricula2),
+                Number (req.body.matricula3),
+                Number (req.body.matricula4),
+                Number (req.body.matricula5)
+            ];
+            con.query(checkMatricula, [matriculaCheck], (err, result3) => {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                if (result3[0]) {
+ //                   console.log('ENTER IN matricula DUPLICATED');
+                    res.render('Registro.ejs', { error: true, errorMessage: 'LAS MATRICULAS YA EXISTEN RECUERDA SOLO UN REGISTRO POR EQUIPO ES NECESARIO' });
+                    return;
+                } else{
+                    password();
+                }
+            });
         });
-
     });
-
 
     function password() {
         bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
@@ -135,7 +171,6 @@ app.post('/registro', (req, res) => {
             });
         });
     }
-
 
     function queryAll(lastInsertID) {
         let alumnos = [
@@ -190,9 +225,10 @@ app.post('/registro', (req, res) => {
                 console.log(err);
                 return;
             }
+            res.redirect('/login');
         });
+
     }
-    res.redirect('/login');
 });
 
 
@@ -222,8 +258,11 @@ app.post('/postulacion', authenticationMiddleware(), (req, res) => {
 app.post('/login', passport.authenticate('local',
     {
         successRedirect: '/',
-        failureRedirect: '/login'
+        failureRedirect: '/loginFailed'
     }));
+
+
+app.get('*', (req, res) => res.redirect('/'));
 
 
 passport.serializeUser(function (id, done) {
@@ -236,7 +275,7 @@ function authenticationMiddleware() {
     return (req, res, next) => {
         if (req.isAuthenticated()) {
             //           console.log(`req.session.passport.user: ${JSON.stringify(req.session.passport)}`);
-            req.session.cookie.maxAge = 60000 * 120;
+            req.session.cookie.maxAge = 10800000;
             return next();
         }
         res.redirect('/login');

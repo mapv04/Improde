@@ -10,17 +10,25 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light" id="nav-bar">
-        <form id="foo" method="GET" action="/login">
-            <a class="navbar-brand" href="" onclick="document.getElementById('foo').submit(); return false;">
-                <img src="/img/univaLogo.png" alt="" style="   height: auto; width: 39px; float: left; padding-right: 7px;">
-                IMPRODE</a>
-        </form>
-    </nav>
+
+        <nav class="navbar" id="nav-bar">
+                <form id="foo" method="GET" action="/login">
+                    <a  href="" onclick="document.getElementById('foo').submit(); return false;">
+                        <img src="/img/univaLogo.png" alt="" style="   height: auto; width: 39px; float: left; padding-right: 7px;">
+                        IMPRODE</a>
+                </form>
+            </nav>
+
 
     <div class="container ">
         <% if(error) {%>
-            <div><%= errorMessage  %></div>
+            <div class="alert alert-danger" role="alert" style="margin-top: 50px;">
+                    <%= errorMessage  %>
+            </div>
+        <%} else{%>
+            <div class="alert alert-dark" role="alert" style="margin-top: 50px;">
+                    NOTA: SOLO UN REGISTRO POR EQUIPO ES NECESARIO
+            </div>
         <%} %>
         <form action="/registro" method="POST" >
             <div id="contain">

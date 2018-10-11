@@ -80,10 +80,11 @@ INSERT INTO pregunta VALUES
 
 select * from alumnos;
 select * from proyecto;
-select * from pregunta;
 select * from equipo;
 select * from representante;
 select * from respuesta_proyecto;
+
+select * from pregunta;
 
 
 delete from equipo;

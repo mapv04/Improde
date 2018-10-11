@@ -36,8 +36,11 @@
                 <img src="/img/univaLogo.png" alt="" class="univa-logo"> MENU
             </button>
             <span>Mis Datos</span>
-            <div class="titulo-tabla">Tu equipo</div>
-            <table class="table" id="tabla-encuesta">
+            <span id="logout"><a href="/logout">Cerrar Sesión</a></span>
+            <br> <br> <br>
+
+            <div class="titulo-datos">Tu equipo</div>
+            <table class="table" id="tabla-postulacion">
                 <thead class="thead-light">
                     <tr>
                         <th scope="col" style="width: 20%">Matricula</th>
@@ -47,45 +50,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td >0121620350</td>
-                        <td >jose lopex portillo</td>
-                        <td >sistemas tecnologicos y de vanguardia</td>
-                        <td >10</td>
-                    </tr>
-                </tbody>
-            </table>
-            <br><br>
-            <div class="titulo-tabla">Representante del equipo</div>
-            <br>
-            <table class="table" id="tabla-encuesta">
-                <thead class="thead-light">
-                    <th scope="col" style="width: 60%">Integrantes de Equipo</th>
-                    <th scope="col" style="width: 40%">Rol</th>
-                    <th scope="col" style="width: 60%">Integrantes de Equipo</th>
-                    <th scope="col" style="width: 40%">Rol</th>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td scope=row><label for="">Integrante1</label></td>
-                        <td><label for=""></label>Lider de Equipo</td>
-                    </tr>
-                    <tr>
-                        <td scope=row><label for="">Integrante2</label></td>
-                        <td><label for=""></label>xxxx</td>
-                    </tr>
-                    <tr>
-                        <td scope=row><label for="">Integrante3</label></td>
-                        <td><label for="">xxxx</label></td>
-                    </tr>
-                    <tr>
-                        <td scope=row><label for="">Integrante4</label></td>
-                        <td><label for="">xxxx</label></td>
-                    </tr>
-                    <tr>
-                        <td scope=row><label for="">Integrante5</label></td>
-                        <td><label for="">xxxx</label></td>
-                    </tr>
+                    <% if(alumnos){%>
+                        <% alumnos.forEach((element) => { %>
+                        <tr>
+                            <td>
+                                <%= element.matricula %>
+                            </td>
+                            <td>
+                                <%= element.nombre %>
+                            </td>
+                            <td>
+                                <%= element.carrera %>
+                            </td>
+                            <td>
+                                <%= element.cuatrimestre %>
+                            </td>
+                        </tr>
+                    <% }); } %>
+
                 </tbody>
             </table>
             <br><br>

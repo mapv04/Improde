@@ -22,6 +22,18 @@ body {
   padding-bottom: 8px;
 }
 
+#registro{
+  float: right;
+  font-size: 17px;
+  color: #0075bc;
+  margin-right: 20px;
+}
+
+#registro:hover{
+  text-decoration: none;
+  color: #68c0f6;
+}
+
 #subtitle{
   text-align: center;
   font-size: 19px;

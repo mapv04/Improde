@@ -55,15 +55,15 @@ a:focus {
 }
 
 #sidebar {
-    min-width: 250px;
-    max-width: 250px;
+    min-width: 205px;
+    max-width: 205px;
     background: white;
     color: black;
     transition: all 0.3s;
 }
 
 #sidebar.active {
-    margin-left: -250px;
+    margin-left: -205px;
 }
 
 #sidebar .sidebar-header {
@@ -112,17 +112,11 @@ a[aria-expanded="true"] {
 
 
 #boton-guardar{
-    margin: 80px auto 120px auto;
+    margin: 10px auto 100px auto;
+    width: 10%;
+    height: auto;
 }
 
-#boton{
-        background:none!important;
-        color:inherit;
-        border:none; 
-        padding:0!important;
-        font: inherit;
-        cursor: pointer;
-}
 
 
 /* ---------------------------------------------------
@@ -140,13 +134,18 @@ a[aria-expanded="true"] {
 }
 
 
-#tabla-encuesta{
+#tabla-postulacion{
     text-align:left;
     font-size: 15px;
-    margin: 0px auto;
+    margin: 5px auto 95px auto;
     width: 85%;
 }
 
+.titulo-datos{
+    margin: 0px auto 20px auto;
+    text-align:center;
+    font-size: 23px;
+}
 
 #sidebarCollapse{
     float: left;
@@ -156,10 +155,21 @@ a[aria-expanded="true"] {
     text-align:left;
     font-size: 18px;
     width: 85%;
-    margin: 60px auto 20px auto;
+    margin: 60px auto 30px auto;
 
 }
 
+#logout{
+    float: right;
+    font-size: 17px;
+    color: #0075bc;
+    margin-right: 29px;
+    padding-top: 9px;
+}
+
+#logout:hover{
+    color: #68c0f6;
+}
 
 
 
