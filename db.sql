@@ -50,13 +50,15 @@ CREATE TABLE respuesta_proyecto (
 );
 
 INSERT INTO pregunta VALUES
-	(1, '¿Qué producto o servicio produces?'),
-	(2, '¿Por qué́ consideras que la solución que propones es innovadora o cuenta con un valor agregado?'),
-	(3, '¿Qué problemática resuelves con tu producto o servicio?'),
-	(4, '¿Quiénes, cuantos y en donde se beneficiarán con tú propuesta?'),
-	(5, '¿Te consideras un emprendedor? ¿Por qué?'),
-	(6, '¿Qué mensaje le darías al cliente para promover el servicio que propones?'),
-	(7, 'Te invitamos a que presentes tu proyecto y tu equipo en un video de no más de 2 minutos (puedes subirlo a cualquier plataforma de videos como youtube y poner el link en el espacio de texto, por ejemplo: https://www.youtube.com/watch?v=klVWGHtRTuE )');
+	(1, 'Modelo de Impacto Qué tipo de impacto quieres tener como empresa/organización (impacto social, impacto personal, impacto local, impacto en una comunidad, impacto ambiental, etc.)? ¿Cómo mides tu impacto?'),
+	(2, 'Propuesta de valor ¿Qué hace única la propuesta de tu organización? ¿Quién más está en el espacio que te interesa, y por qué eres mejor?'),
+	(3, 'Aliados ¿Con quién trabajas para crear impacto positivo para tu negocio o para el contexto en general? ¿Con quién no trabajarías? ¿Quiénes son tus clientes, fundadores y red de contactos?'),
+	(4, 'Productos y Servicios ¿Qué estas creando? ¿Cómo te aseguras que tu producto o servicio funciona bien, y produce el impacto que estas esperando lograr?'),
+	(5, 'Talento y Modelo Operacional ¿Quién hace el trabajo? ¿Cómo necesitan ser el organigrama organizacional y la estructura de costos de tu organización para lograr las metas interpuestas en tu modelo de impacto y propuesta de valor?'),
+	(6, 'Modelo de ventas ¿Cómo se financia tu trabajo? ¿Cómo se puede financiarse creativamente?'),
+	(7, '¿Te consideras un emprendedor? ¿Por qué?'),
+	(8, '¿Qué mensaje le darías al cliente para promover el servicio que propones?'),
+	(9, 'Te invitamos a que presentes tu proyecto y tu equipo en un video de no más de 2 minutos (puedes subirlo a cualquier plataforma de videos como youtube y poner el link en el espacio de texto, por ejemplo: https://www.youtube.com/watch?v=klVWGHtRTuE )');
 
 
 
@@ -87,9 +89,8 @@ select * from respuesta_proyecto;
 delete from equipo;
 delete from representante;
 delete from alumnos;
-delete from pregunta;
-delete from proyecto;
 delete from respuesta_proyecto;
+delete from proyecto;
 */
 
 

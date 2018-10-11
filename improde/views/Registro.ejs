@@ -19,6 +19,9 @@
     </nav>
 
     <div class="container ">
+        <% if(error) {%>
+            <div><%= errorMessage  %></div>
+        <%} %>
         <form action="/registro" method="POST" >
             <div id="contain">
                 <p id="title">Datos del proyecto</p>
