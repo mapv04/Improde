@@ -1,0 +1,73 @@
+<!DOCTYPE hmtl>
+<html>
+
+<head>
+    <title>IMPRODE PROYECTOS</title>
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="..//public/stylesheet/bootstrap.css">
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="..//public/stylesheet/dashboard.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <img src="../public/img/univaLogo.png" alt="" class="univa-logo">
+                <h3>IMPRODE</h3>
+            </div>
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a>Proyectos</a>
+                </li>
+                <li>
+                    <a href="">Mis Datos</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="main">
+            <button type="button" id="sidebarCollapse" class="btn btn-light">
+                <img src="../public/img/univaLogo.png" alt="" class="univa-logo"> MENU
+            </button>
+            <span>Tus Proyectos</span>
+            <span id="logout"><a href="/logout">Cerrar Sesión</a></span>
+            <br> <br> <br>
+
+            <div class="titulo-datos">Proyectos</div>
+            <br><br>
+            
+            <!--  Lista de proyectos asignads  -->
+            
+            <div class="card bg-light mb-3" style="max-width: 15rem; max-height: 18rem;">
+            <div class="card-header">Header</div>
+             <div class="card-body">
+                <p class="card-text" style="font-size: 15px;">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              </div>
+            </div>
+        </div>
+
+        <!-- jQuery CDN - Slim version (=without AJAX) -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+        <!-- Popper.JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+            crossorigin="anonymous"></script>
+        <!-- Bootstrap JS -->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+            crossorigin="anonymous"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#sidebarCollapse').on('click', function () {
+                    $('#sidebar').toggleClass('active');
+                });
+            });
+        </script>
+    </div>
+
+</body>
+
+</html>
