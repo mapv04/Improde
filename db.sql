@@ -61,12 +61,37 @@ INSERT INTO pregunta VALUES
 	(9, 'Te invitamos a que presentes tu proyecto y tu equipo en un video de no más de 2 minutos (puedes subirlo a cualquier plataforma de videos como youtube y poner el link en el espacio de texto, por ejemplo: https://www.youtube.com/watch?v=klVWGHtRTuE )');
 
 
+CREATE TABLE cuentas_revisores (
+	id_revisor BIGINT AUTO_INCREMENT, 
+	correo_revisor text NOT NULL ,
+	contrasena_revisor text NOT NULL,
+	nombre_revisor text NOT NULL,
+	nivel_usuario_revisor int DEFAULT 1,
+	PRIMARY KEY (id_revisor)
+);
+
+
+CREATE TABLE asignacion_revisores (
+	id_revisor BIGINT NOT NULL , 
+	id_proyecto BIGINT NOT NULL ,
+	FOREIGN KEY (id_revisor) REFERENCES cuentas_revisores(id_revisor),
+	FOREIGN KEY (id_proyecto) REFERENCES proyecto(id_proyecto)
+);
+
+
+ALTER TABLE proyecto add nivel_usuario int DEFAULT 2 ;
+INSERT INTO proyecto VALUES (0,'admin','admin@admin.com','test123',0);
+
+
+
 
 
 
 
 /* TESTING PURPOSES
+delete from proyecto where nombre_proyecto ='admin';
 
+select * from proyecto p LEFT JOIN asignacion_revisores ar ON  ar.id_proyecto = p.id_proyecto LEFT JOIN cuentas_revisores cr ON cr.id_revisor = ar.id_revisor;
 
 select * from alumnos;
 select * from proyecto;
