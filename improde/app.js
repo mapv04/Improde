@@ -329,25 +329,53 @@ app.post('/agregarRevisor', authenticationMiddleware(), (req, res) => {
     let password = req.body.password;
     let sqlCuentaRevisor = 'INSERT INTO cuentas_revisores(correo_revisor,contrasena_revisor,nombre_revisor) VALUES(?)';
     let sqlAsignacionRevisor = 'INSERT INTO asignacion_revisores VALUES(?)';
+    let sqlCheckRevisorEmail = 'SELECT id_revisor, nombre_revisor  FROM cuentas_revisores WHERE correo_revisor = ?'
+    let sqlCheckRevisorNombre = 'SELECT correo_revisor, nombre_revisor FROM cuentas_revisores WHERE nombre_revisor = ?';
 
-    con.query(sqlCuentaRevisor, [[email,password,nombreRevisor]], (err, result) => {
+    con.query(sqlCheckRevisorEmail, [[email]], (err, result) => {
         if (err) {
             console.log(err);
             return;
         }
-        queryAsignacion(result.insertId);
-        res.redirect('/');
-    });
 
+        if(result[0]){
+             if(nombreRevisor.toLowerCase().replace(/\s/g,'')===result[0].nombre_revisor.toLowerCase().replace(/\s/g,'')){
+                queryAsignacion(result[0].id_revisor);
+            }
+            else{
+                res.redirect('/');
+            }
+        } else{
+            con.query(sqlCheckRevisorNombre, [[nombreRevisor]], (err, result2) => {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                if(!result2[0]){
+                    con.query(sqlCuentaRevisor, [[email, password, nombreRevisor]], (err, result3) => {
+                        if (err) {
+                            console.log(err);
+                            return;
+                        }
+                        queryAsignacion(result3.insertId);
+                    });
+                }
+                else{
+                    res.redirect('/');
+                }
+            });
+        } 
+    });
+   
     function queryAsignacion(lastInsertID){
-        con.query(sqlAsignacionRevisor, [[lastInsertID,idProyecto]], (err, result) => {
+        con.query(sqlAsignacionRevisor, [[lastInsertID,idProyecto]], (err, resul) => {
             if (err) {
                 console.log(err);
                 return;
             }
+            res.redirect('/');
         });
     }
-    
 });
 
 
