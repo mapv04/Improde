@@ -34,11 +34,23 @@ app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new localStrategy(
     function (username, password, done) {
-        con.query('SELECT * FROM proyecto WHERE correo = ?', [username], (err, results) => {
+        con.query('SELECT * FROM proyecto WHERE correo = ?', [username], (err, result1) => {
             if (err) done(err);
-            if (!results[0]) return done(null, false);
-            if (results[0].contrasena === password) return done(null, { id_proyecto: results[0].id_proyecto, nivel_usuario: results[0].nivel_usuario });
-            return done(null, false);
+            if (result1[0]) {
+                if (result1[0].contrasena === password){
+                    return done(null, { id_proyecto: result1[0].id_proyecto, nivel_usuario: result1[0].nivel_usuario });
+                } else{
+                    return done(null, false);
+                } 
+            } else{
+                con.query('SELECT * FROM cuentas_revisores WHERE correo_revisor = ?', [username], (err, result2) => {
+                    if (err) done(err);
+                    if(result2[0]){
+                        if(result2[0].contrasena_revisor === password) return done(null, { id_proyecto: result2[0].id_revisor, nivel_usuario: result2[0].nivel_usuario_revisor });
+                    }
+                    return done(null, false);
+                });
+            }
         });
     }
 ));

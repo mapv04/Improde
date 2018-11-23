@@ -96,7 +96,7 @@ CREATE TABLE asignacion_revisores (
 
 
 ALTER TABLE proyecto add nivel_usuario int DEFAULT 2 ;
-INSERT INTO proyecto VALUES (0,'admin','admin@admin.com','test123',0);
+INSERT INTO proyecto VALUES (0,'admin','admin@improde.com','.6jNJ]Qfxc9.LNy`',0);
 
 
 
