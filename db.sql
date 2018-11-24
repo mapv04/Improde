@@ -50,21 +50,6 @@ CREATE TABLE respuesta_proyecto (
 );
 
 
-CREATE TABLE evaluador (
-matricula BIGINT NOT NULL,
-nombre nvarchar(255) NOT NULL,
-correo nvarchar(255) NOT NULL,
-contrasena text NOT NULL,
-PRIMARY KEY(matricula)
-);
-
-CREATE TABLE evaluador_proyecto (
-matricula_evaluador BIGINT NOT NULL,
-id_proyecto BIGINT NOT NULL,
-FOREIGN KEY (matricula_evaluador) REFERENCES evaluador(matricula),
-FOREIGN KEY (id_proyecto) REFERENCES proyecto(id_proyecto)
-);
-
 INSERT INTO pregunta VALUES
 	(1, 'Modelo de Impacto Qué tipo de impacto quieres tener como empresa/organización (impacto social, impacto personal, impacto local, impacto en una comunidad, impacto ambiental, etc.)? ¿Cómo mides tu impacto?'),
 	(2, 'Propuesta de valor ¿Qué hace única la propuesta de tu organización? ¿Quién más está en el espacio que te interesa, y por qué eres mejor?'),
@@ -90,6 +75,24 @@ CREATE TABLE cuentas_revisores (
 CREATE TABLE asignacion_revisores (
 	id_revisor BIGINT NOT NULL , 
 	id_proyecto BIGINT NOT NULL ,
+	FOREIGN KEY (id_revisor) REFERENCES cuentas_revisores(id_revisor),
+	FOREIGN KEY (id_proyecto) REFERENCES proyecto(id_proyecto)
+);
+
+CREATE TABLE evaluacion_proyectos (
+	id_revisor BIGINT NOT NULL,
+	id_proyecto BIGINT NOT NULL,
+	id_pregunta INT NOT NULL,
+	calificacion INT NOT NULL,
+	FOREIGN KEY (id_revisor) REFERENCES cuentas_revisores(id_revisor),
+	FOREIGN KEY (id_proyecto) REFERENCES proyecto(id_proyecto),
+	FOREIGN KEY (id_pregunta) REFERENCES pregunta(id_pregunta)
+);
+
+CREATE TABLE retroalimentacion (
+	id_revisor BIGINT NOT NULL,
+	id_proyecto BIGINT NOT NULL,
+	retro TEXT NOT NULL,
 	FOREIGN KEY (id_revisor) REFERENCES cuentas_revisores(id_revisor),
 	FOREIGN KEY (id_proyecto) REFERENCES proyecto(id_proyecto)
 );

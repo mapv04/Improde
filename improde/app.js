@@ -13,7 +13,7 @@ let con = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     port: '3306',
-    password: 'car1118',
+    password: 'Lic080497',
     database: 'improde'
 });
 con.connect(err => {
@@ -101,6 +101,10 @@ app.get('/', authenticationMiddleware(), (req, res) => {
                             LEFT JOIN asignacion_revisores ar ON ar.id_proyecto = p.id_proyecto
                             LEFT JOIN cuentas_revisores cr ON cr.id_revisor = ar.id_revisor
                             ORDER BY id_proyecto ASC`;
+    let sqlRevisorProyecto = `SELECT cr.id_revisor, cr.nombre_revisor, ar.id_proyecto, p.nombre_proyecto FROM cuentas_revisores cr 
+                            INNER JOIN asignacion_revisores ar ON cr.id_revisor = ar.id_revisor inner join proyecto p 
+                            ON ar.id_proyecto = p.id_proyecto where cr.id_revisor = ?`;
+
     if (nivelUsuario === 0) {
         con.query(sqlAdminProyecto, (err, result1) => {
             if (err) {
@@ -116,7 +120,14 @@ app.get('/', authenticationMiddleware(), (req, res) => {
             });
         });
     } else if (nivelUsuario === 1) {
-        res.redirect('/login');
+        con.query(sqlRevisorProyecto, req.session.passport.user.id_proyecto,(err, result) => {
+            if (err){
+                console.log(err);
+                return;
+            }
+            res.render('Proyectos.ejs', {proyectos: result});
+
+        });
     } else if (nivelUsuario === 2) {
         con.query(sqlRespuesta, [idProyecto], (err, result) => {
             if (err) {
@@ -141,6 +152,35 @@ app.get('/', authenticationMiddleware(), (req, res) => {
 
 });
 
+app.get('/evaluacion/:idProyecto', authenticationMiddleware(), (req, res) => {
+    if(req.session.passport.user.nivel_usuario!==1){
+        res.redirect('/');
+        return;
+    }
+    let idProyecto = req.params.idProyecto;
+    let sqlRespuestas = 'SELECT rp.respuesta, p.nombre_proyecto FROM respuesta_proyecto rp INNER JOIN proyecto p ON rp.id_proyecto = p.id_proyecto WHERE rp.id_proyecto = ? ORDER BY id_pregunta';
+    con.query(sqlRespuestas, [idProyecto], (err, result) => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        res.render('Evaluacion.ejs', {
+            respuesta1: result[0].respuesta,
+            respuesta2: result[1].respuesta,
+            respuesta3: result[2].respuesta,
+            respuesta4: result[3].respuesta,
+            respuesta5: result[4].respuesta,
+            respuesta6: result[5].respuesta,
+            respuesta7: result[6].respuesta,
+            respuesta8: result[7].respuesta,
+            respuesta9: result[8].respuesta,
+            nombreProyecto: result[0].nombre_proyecto,
+            id_proyecto: idProyecto
+        });
+    });
+});
+
+
 app.get('/misdatos', authenticationMiddleware(), (req, res) => {
     if(req.session.passport.user.nivel_usuario!==2){
         res.redirect('/');
@@ -159,8 +199,9 @@ app.get('/misdatos', authenticationMiddleware(), (req, res) => {
 
 });
 
-
-/* app.post('/registro', (req, res) => {
+////////////////////////////////////////////////
+/*
+ app.post('/registro', (req, res) => {
     let checkProyecto = 'SELECT  nombre_proyecto FROM  proyecto WHERE nombre_proyecto = ?';
     let checkCorreo = 'SELECT  correo FROM  proyecto WHERE correo = ?';
     let checkMatricula = 'SELECT  matricula FROM  equipo WHERE matricula IN (?)';
@@ -301,7 +342,7 @@ app.get('/misdatos', authenticationMiddleware(), (req, res) => {
         });
     }
 }); */
-
+////////////////////////////////////////////
 
 app.post('/postulacion', authenticationMiddleware(), (req, res) => {
     if(req.session.passport.user.nivel_usuario!==2){
@@ -338,6 +379,7 @@ app.post('/agregarRevisor', authenticationMiddleware(), (req, res) => {
     let idProyecto = req.body.idProyecto.replace('IPD18-','').match(/\d+/g)[0];
     let nombreRevisor = req.body.nombreRevisor;
     let email = req.body.email.toLowerCase();
+
     let password = req.body.password;
     let sqlCuentaRevisor = 'INSERT INTO cuentas_revisores(correo_revisor,contrasena_revisor,nombre_revisor) VALUES(?)';
     let sqlAsignacionRevisor = 'INSERT INTO asignacion_revisores VALUES(?)';
@@ -390,10 +432,44 @@ app.post('/agregarRevisor', authenticationMiddleware(), (req, res) => {
     }
 });
 
+app.post('/calificar/:idProyecto', authenticationMiddleware(), (req, res) => {
+    if(req.session.passport.user.nivel_usuario!==1){
+        res.redirect('/');
+        return;
+    }
+    let idRevisor =req.session.passport.user.id_proyecto;
+    let idProyecto = req.params.idProyecto;
+    let sqlCalificar = 'INSERT INTO evaluacion_proyectos (id_revisor,id_proyecto,id_pregunta,calificacion) VALUES (?,?,?,?);';
+    let sqlRetro = 'INSERT INTO retroalimentacion (id_revisor, id_proyecto, retro) VALUES (?,?,?)';
+    let arrayCalificaciones = [
+        req.body.calificacion1,
+        req.body.calificacion2,
+        req.body.calificacion3,
+        req.body.calificacion4,
+        req.body.calificacion5,
+        req.body.calificacion6,
+        req.body.calificacion7,
+        req.body.calificacion8,
+        req.body.calificacion9
+    ];
+    for (let i = 0; i < arrayCalificaciones.length; i++) {
+        con.query(sqlCalificar,
+            [idRevisor, idProyecto, i +1, arrayCalificaciones[i]], (err, results) => {
+                if (err) console.log(err);
+            });
+    }
+    con.query(sqlRetro,[idRevisor, idProyecto, req.body.retro], (err, results) => {
+        if (err) console.log(err);
+    });
+    res.redirect('/');
+
+});
+
 
 app.post('/login', passport.authenticate('local',
     {
         successRedirect: '/',
+
         failureRedirect: '/loginFailed'
     }));
 

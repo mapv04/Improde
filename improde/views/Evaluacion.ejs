@@ -5,9 +5,9 @@
     <title>IMPRODE PROYECTOS</title>
 
     <!-- Bootstrap CSS CDN -->
-    <link rel="stylesheet" href="../public/stylesheet/bootstrap.css">
+    <link rel="stylesheet" href="/stylesheet/bootstrap.css">
     <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="../public/stylesheet/dashboard.css">
+    <link rel="stylesheet" href="/stylesheet/dashboard.css">
 </head>
 
 <body>
@@ -33,11 +33,12 @@
             <button type="button" id="sidebarCollapse" class="btn btn-light">
                 <img src="/img/univaLogo.png" alt="" class="univa-logo"> MENU
             </button>
-            <span>Nombre del Proyecto</span>
+            <span><%= nombreProyecto%></span>
             <span id="logout"><a href="/logout">Cerrar Sesión</a></span>
 
             <div id="titulo-tabla">Evaluar las siguientes respuestas</div>
-            <form action="/evaluacion" method="POST">
+
+            <form action="/calificar/<%= id_proyecto%>" method="POST">
                 <table class="table" id="tabla-postulacion">
                     <tbody>
                         <tr class="thead-light">
@@ -52,7 +53,7 @@
                             <td scope="row" colspan="2"><textarea name="respuesta1" class="form-control" rows="5" disabled><%=respuesta1 %></textarea></td>
                         </tr>
                         <tr>
-                            <td scope="row" colspan="2">  1  <input type="radio" name ="calificacion1" value="1" style="margin-right: 100px;">  2 <input type="radio" name="calificacion1" value="2" style="margin-right: 100px;">  3 <input type="radio" name="calificacion1" value="3" style="margin-right: 100px;">  4 <input type="radio" name="calificacion1" value="4" style="margin-right: 100px;">  5  <input type="radio" name="calificacion1" value="5">
+                            <td scope="row" colspan="2">  1  <input type="radio" name ="calificacion1" value="1" style="margin-right: 100px;" required>  2 <input type="radio" name="calificacion1" value="2" style="margin-right: 100px;" required>  3 <input type="radio" name="calificacion1" value="3" style="margin-right: 100px;" required>  4 <input type="radio" name="calificacion1" value="4" style="margin-right: 100px;" required>  5  <input type="radio" name="calificacion1" value="5" required>
                         </tr>
 
 
@@ -76,9 +77,9 @@
                             <td scope="row"><textarea name="respuesta3" class="form-control" rows="6" disabled><%= respuesta3 %></textarea></td>
                         </tr>
                         <tr>
-                            <td scope="row"> <div> 1  <input type="radio" name="calificacion2" value="1" style="margin-right: 90px;">  2 <input type="radio" name="calificacion2" value="2" style="margin-right: 90px;">  3 <input type="radio" name="calificacion2" value="3" style="margin-right: 90px;">  4 <input type="radio" name="calificacion2" value="4" style="margin-right: 90px;">  5  <input type="radio" name="calificacion2" value="5"> </div>
+                            <td scope="row"> <div> 1  <input type="radio" name="calificacion2" value="1" style="margin-right: 90px;" required>  2 <input type="radio" name="calificacion2" value="2" style="margin-right: 90px;" required>  3 <input type="radio" name="calificacion2" value="3" style="margin-right: 90px;" required>  4 <input type="radio" name="calificacion2" value="4" style="margin-right: 90px;" required>  5  <input type="radio" name="calificacion2" value="5" required> </div>
                             
-                                <td scope="row"> <div style="margin-left: 30px;"> 1  <input type="radio" name="calificacion3" value="1" style="margin-right: 90px;">  2 <input type="radio" name="calificacion3" value="2"  style="margin-right: 90px;">  3 <input type="radio" name="calificacion3" value="3"  style="margin-right: 90px;">  4 <input type="radio" name="calificacion3" value="4"  style="margin-right: 90px;">  5  <input type="radio" name="calificacion3" value="5" > </div>
+                                <td scope="row"> <div style="margin-left: 30px;"> 1  <input type="radio" name="calificacion3" value="1" style="margin-right: 90px;" required>  2 <input type="radio" name="calificacion3" value="2"  style="margin-right: 90px;" required>  3 <input type="radio" name="calificacion3" value="3"  style="margin-right: 90px;" required>  4 <input type="radio" name="calificacion3" value="4"  style="margin-right: 90px;" required>  5  <input type="radio" name="calificacion3" value="5" required> </div>
                             
                         </tr>
 
@@ -103,9 +104,9 @@
                             <td scope="row"><textarea name="respuesta5" class="form-control" rows="6" disabled><%= respuesta5 %></textarea></td>
                         </tr>
                          <tr>
-                            <td scope="row"> <div style="margin-left: 30px;"> 1  <input type="radio" name="calificacion4" value="1" style="margin-right: 90px;">  2 <input type="radio" name="calificacion4" value="2"  style="margin-right: 90px;">  3 <input type="radio" name="calificacion4" value="3"  style="margin-right: 90px;">  4 <input type="radio" name="calificacion4" value="4"  style="margin-right: 90px;">  5  <input type="radio" name="calificacion4" value="5" > </div>
+                            <td scope="row"> <div style="margin-left: 30px;"> 1  <input type="radio" name="calificacion4" value="1" style="margin-right: 90px;" required>  2 <input type="radio" name="calificacion4" value="2"  style="margin-right: 90px;" required>  3 <input type="radio" name="calificacion4" value="3"  style="margin-right: 90px;" required>  4 <input type="radio" name="calificacion4" value="4"  style="margin-right: 90px;" required>  5  <input type="radio" name="calificacion4" value="5" required> </div>
                             
-                                <td scope="row"> <div style="margin-left: 30px;"> 1  <input type="radio" name="calificacion5" value="1" style="margin-right: 90px;">  2 <input type="radio" name="calificacion5" value="2"  style="margin-right: 90px;">  3 <input type="radio" name="calificacion5" value="3"  style="margin-right: 90px;">  4 <input type="radio" name="calificacion5" value="4"  style="margin-right: 90px;">  5  <input type="radio" name="calificacion5" value="5" > </div>
+                                <td scope="row"> <div style="margin-left: 30px;"> 1  <input type="radio" name="calificacion5" value="1" style="margin-right: 90px;" required>  2 <input type="radio" name="calificacion5" value="2"  style="margin-right: 90px;" required>  3 <input type="radio" name="calificacion5" value="3"  style="margin-right: 90px;" required>  4 <input type="radio" name="calificacion5" value="4"  style="margin-right: 90px;" required>  5  <input type="radio" name="calificacion5" value="5" required> </div>
                             
                         </tr>
 
@@ -121,7 +122,7 @@
                                 <td scope="row" colspan="2"><textarea name="respuesta6" class="form-control"  rows="5" disabled><%= respuesta6 %></textarea></td>
                             </tr>
                              <tr>
-                            <td scope="row" colspan="2">  1  <input type="radio" name ="calificacion6" value="1" style="margin-right: 100px;">  2 <input type="radio" name="calificacion6" value="2" style="margin-right: 100px;">  3 <input type="radio" name="calificacion6" value="3" style="margin-right: 100px;">  4 <input type="radio" name="calificacion6" value="4" style="margin-right: 100px;">  5  <input type="radio" name="calificacion6" value="5">
+                            <td scope="row" colspan="2">  1  <input type="radio" name ="calificacion6" value="1" style="margin-right: 100px;" required>  2 <input type="radio" name="calificacion6" value="2" style="margin-right: 100px;" required>  3 <input type="radio" name="calificacion6" value="3" style="margin-right: 100px;" required>  4 <input type="radio" name="calificacion6" value="4" style="margin-right: 100px;" required>  5  <input type="radio" name="calificacion6" value="5" required>
                         </tr>
                     </tbody>
                 </table>
@@ -139,7 +140,7 @@
                             <td><textarea name="respuesta7" class="form-control" id="exampleFormControlTextarea1" rows="5" disabled><%= respuesta7 %></textarea></td>
                         </tr>
                          <tr>
-                            <td scope="row" colspan="2">  1  <input type="radio" name ="calificacion7" value="1" style="margin-right: 100px;">  2 <input type="radio" name="calificacion7" value="2" style="margin-right: 100px;">  3 <input type="radio" name="calificacion7" value="3" style="margin-right: 100px;">  4 <input type="radio" name="calificacion7" value="4" style="margin-right: 100px;">  5  <input type="radio" name="calificacion7" value="5">
+                            <td scope="row" colspan="2">  1  <input type="radio" name ="calificacion7" value="1" style="margin-right: 100px;" required>  2 <input type="radio" name="calificacion7" value="2" style="margin-right: 100px;" required>  3 <input type="radio" name="calificacion7" value="3" style="margin-right: 100px;" required>  4 <input type="radio" name="calificacion7" value="4" style="margin-right: 100px;" required>  5  <input type="radio" name="calificacion7" value="5" required>
                         </tr>
                         <tr>
                             <td scope="row">¿Qué mensaje le darías al cliente para promover el servicio que propones?
@@ -147,7 +148,7 @@
                             <td><textarea name="respuesta8" class="form-control" id="exampleFormControlTextarea1" rows="5" disabled><%= respuesta8 %></textarea></td>
                         </tr>
                          <tr>
-                           <td scope="row" colspan="2">  1  <input type="radio" name ="calificacion8" value="1" style="margin-right: 100px;">  2 <input type="radio" name="calificacion8" value="2" style="margin-right: 100px;">  3 <input type="radio" name="calificacion8" value="3" style="margin-right: 100px;">  4 <input type="radio" name="calificacion8" value="4" style="margin-right: 100px;">  5  <input type="radio" name="calificacion8" value="5">
+                           <td scope="row" colspan="2">  1  <input type="radio" name ="calificacion8" value="1" style="margin-right: 100px;" required>  2 <input type="radio" name="calificacion8" value="2" style="margin-right: 100px;" required>  3 <input type="radio" name="calificacion8" value="3" style="margin-right: 100px;" required>  4 <input type="radio" name="calificacion8" value="4" style="margin-right: 100px;" required>  5  <input type="radio" name="calificacion8" value="5" required>
                         </tr>
                         <tr>
                             <td scope="row"> Te invitamos a que presentes tu proyecto y tu equipo en un video de no más
@@ -159,7 +160,12 @@
                             <td><textarea name="respuesta9" class="form-control" id="exampleFormControlTextarea1" rows="5" disabled><%= respuesta9 %></textarea></td>
                         </tr>
                          <tr>
-                            <td scope="row" colspan="2">  1  <input type="radio" name ="calificacion9" value="1" style="margin-right: 100px;">  2 <input type="radio" name="calificacion9" value="2" style="margin-right: 100px;">  3 <input type="radio" name="calificacion9" value="3" style="margin-right: 100px;">  4 <input type="radio" name="calificacion9" value="4" style="margin-right: 100px;">  5  <input type="radio" name="calificacion9" value="5">
+                            <td scope="row" colspan="2">  1  <input type="radio" name ="calificacion9" value="1" style="margin-right: 100px;" required>  2 <input type="radio" name="calificacion9" value="2" style="margin-right: 100px;" required>  3 <input type="radio" name="calificacion9" value="3" style="margin-right: 100px;" required>  4 <input type="radio" name="calificacion9" value="4" style="margin-right: 100px;" required>  5  <input type="radio" name="calificacion9" value="5" required>
+                        </tr>
+                        <tr><td scope="row"></td></tr>
+                         <tr>
+                            <td scope="row">Retroalimentacion</td>
+                            <td><textarea name="retro" class="form-control" id="exampleFormControlTextarea1" rows="5" required></textarea></td>
                         </tr>
                     </tbody>
                 </table>

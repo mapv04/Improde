@@ -4,9 +4,9 @@
 <head>
     <title>IMPRODE PROYECTOS</title>
     <!-- Bootstrap CSS CDN -->
-    <link rel="stylesheet" href="..//public/stylesheet/bootstrap.css">
+    <link rel="stylesheet" href="/stylesheet/bootstrap.css">
     <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="..//public/stylesheet/dashboard.css">
+    <link rel="stylesheet" href="/stylesheet/dashboard.css">
 </head>
 
 <body>
@@ -14,7 +14,7 @@
         <!-- Sidebar  -->
         <nav id="sidebar">
             <div class="sidebar-header">
-                <img src="../public/img/univaLogo.png" alt="" class="univa-logo">
+                <img src="/img/univaLogo.png" alt="" class="univa-logo">
                 <h3>IMPRODE</h3>
             </div>
             <ul class="list-unstyled components">
@@ -30,23 +30,25 @@
         <!-- Page Content  -->
         <div id="main">
             <button type="button" id="sidebarCollapse" class="btn btn-light">
-                <img src="../public/img/univaLogo.png" alt="" class="univa-logo"> MENU
+                <img src="/img/univaLogo.png" alt="" class="univa-logo"> MENU
             </button>
             <span>Tus Proyectos</span>
             <span id="logout"><a href="/logout">Cerrar Sesión</a></span>
             <br> <br> <br>
 
             <div class="titulo-datos">Proyectos</div>
-            <br><br>
-            
-            <!--  Lista de proyectos asignads  -->
-            
-            <div class="card bg-light mb-3" style="max-width: 15rem; max-height: 18rem;">
-            <div class="card-header">Header</div>
-             <div class="card-body">
-                <p class="card-text" style="font-size: 15px;">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              </div>
+            <br>
+
+            <!--  Lista de proyectos asignados  -->
+            <% if (proyectos){ %>
+                <% proyectos.forEach(element => { %>
+           <a href="/evaluacion/<%=element.id_proyecto %>"> <div class="card bg-light mb-3" style="max-width: 20rem; max-height: 18rem; float: left; margin: 8px;">
+            <div class="card-header" style="font-size: 15px;">(<span ><%= element.id_proyecto %></span>). <%= element.nombre_proyecto %></div>
             </div>
+            </a>
+            <% }); %>
+            <% } %>
+                            
         </div>
 
         <!-- jQuery CDN - Slim version (=without AJAX) -->
