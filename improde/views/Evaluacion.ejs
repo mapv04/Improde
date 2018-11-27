@@ -13,17 +13,17 @@
 <body>
     <div class="wrapper">
         <!-- Sidebar  -->
-        <nav id="sidebar">
+        <nav id="sidebar" class="active">
             <div class="sidebar-header">
                 <img src="/img/univaLogo.png" alt="" class="univa-logo">
                 <h3>IMPRODE</h3>
             </div>
             <ul class="list-unstyled components">
-                <li class="active">
-                    <a href="">Proyectos</a>
+                <li >
+                    <a href="/misdatos">Proyectos</a>
                 </li>
-                <li>
-                    <a href="/misdatos">Mis Datos</a>
+                <li class="active">
+                    <a >Evaluación</a>
                 </li>
             </ul>
         </nav>
@@ -36,7 +36,7 @@
             <span><%= nombreProyecto%></span>
             <span id="logout"><a href="/logout">Cerrar Sesión</a></span>
 
-            <div id="titulo-tabla">Evaluar las siguientes respuestas</div>
+            <div id="titulo-tabla">Selecciona la calificación de cada segmento y escribe la retroalimentación final del proyecto</div>
 
             <form action="/calificar/<%= id_proyecto%>" method="POST">
                 <table class="table" id="tabla-postulacion">

@@ -75,9 +75,11 @@ CREATE TABLE cuentas_revisores (
 CREATE TABLE asignacion_revisores (
 	id_revisor BIGINT NOT NULL , 
 	id_proyecto BIGINT NOT NULL ,
+	evaluacion_completada int DEFAULT 0,
 	FOREIGN KEY (id_revisor) REFERENCES cuentas_revisores(id_revisor),
 	FOREIGN KEY (id_proyecto) REFERENCES proyecto(id_proyecto)
 );
+
 
 CREATE TABLE evaluacion_proyectos (
 	id_revisor BIGINT NOT NULL,
@@ -99,6 +101,7 @@ CREATE TABLE retroalimentacion (
 
 
 ALTER TABLE proyecto add nivel_usuario int DEFAULT 2 ;
+ALTER TABLE asignacion_revisores ADD evaluacion_completada int DEFAULT 0;
 INSERT INTO proyecto VALUES (0,'admin','admin@improde.com','.6jNJ]Qfxc9.LNy`',0);
 
 

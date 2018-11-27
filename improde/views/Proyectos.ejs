@@ -12,7 +12,7 @@
 <body>
     <div class="wrapper">
         <!-- Sidebar  -->
-        <nav id="sidebar">
+        <nav id="sidebar" class="active">
             <div class="sidebar-header">
                 <img src="/img/univaLogo.png" alt="" class="univa-logo">
                 <h3>IMPRODE</h3>
@@ -20,9 +20,6 @@
             <ul class="list-unstyled components">
                 <li class="active">
                     <a>Proyectos</a>
-                </li>
-                <li>
-                    <a href="">Mis Datos</a>
                 </li>
             </ul>
         </nav>
@@ -32,21 +29,19 @@
             <button type="button" id="sidebarCollapse" class="btn btn-light">
                 <img src="/img/univaLogo.png" alt="" class="univa-logo"> MENU
             </button>
-            <span>Tus Proyectos</span>
             <span id="logout"><a href="/logout">Cerrar Sesión</a></span>
             <br> <br> <br>
 
-            <div class="titulo-datos">Proyectos</div>
+            <div class="titulo-datos">Proyectos pendientes a evaluar</div>
             <br>
 
             <!--  Lista de proyectos asignados  -->
             <% if (proyectos){ %>
                 <% proyectos.forEach(element => { %>
-           <a href="/evaluacion/<%=element.id_proyecto %>"> <div class="card bg-light mb-3" style="max-width: 20rem; max-height: 18rem; float: left; margin: 8px;">
-            <div class="card-header" style="font-size: 15px;">(<span ><%= element.id_proyecto %></span>). <%= element.nombre_proyecto %></div>
-            </div>
-            </a>
-            <% }); %>
+                    <% if(element.evaluacion_completada===0){%>
+                        <a  href="/evaluacion/<%=element.id_proyecto %>"class="btn btn-secondary btn-lg" style="width: 20%"> <%= element.nombre_proyecto %></a><br><br>
+                    <%}%>
+                <% }); %>
             <% } %>
                             
         </div>

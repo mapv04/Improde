@@ -13,7 +13,7 @@ let con = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     port: '3306',
-    password: 'Lic080497',
+    password: 'car1118',
     database: 'improde'
 });
 con.connect(err => {
@@ -101,7 +101,7 @@ app.get('/', authenticationMiddleware(), (req, res) => {
                             LEFT JOIN asignacion_revisores ar ON ar.id_proyecto = p.id_proyecto
                             LEFT JOIN cuentas_revisores cr ON cr.id_revisor = ar.id_revisor
                             ORDER BY id_proyecto ASC`;
-    let sqlRevisorProyecto = `SELECT cr.id_revisor, cr.nombre_revisor, ar.id_proyecto, p.nombre_proyecto FROM cuentas_revisores cr 
+    let sqlRevisorProyecto = `SELECT cr.id_revisor, cr.nombre_revisor, ar.id_proyecto, p.nombre_proyecto ,ar.evaluacion_completada FROM cuentas_revisores cr 
                             INNER JOIN asignacion_revisores ar ON cr.id_revisor = ar.id_revisor inner join proyecto p 
                             ON ar.id_proyecto = p.id_proyecto where cr.id_revisor = ?`;
 
@@ -382,7 +382,7 @@ app.post('/agregarRevisor', authenticationMiddleware(), (req, res) => {
 
     let password = req.body.password;
     let sqlCuentaRevisor = 'INSERT INTO cuentas_revisores(correo_revisor,contrasena_revisor,nombre_revisor) VALUES(?)';
-    let sqlAsignacionRevisor = 'INSERT INTO asignacion_revisores VALUES(?)';
+    let sqlAsignacionRevisor = 'INSERT INTO asignacion_revisores (id_revisor, id_proyecto) VALUES(?)';
     let sqlCheckRevisorEmail = 'SELECT id_revisor, nombre_revisor  FROM cuentas_revisores WHERE correo_revisor = ?'
     let sqlCheckRevisorNombre = 'SELECT correo_revisor, nombre_revisor FROM cuentas_revisores WHERE nombre_revisor = ?';
 
@@ -441,6 +441,7 @@ app.post('/calificar/:idProyecto', authenticationMiddleware(), (req, res) => {
     let idProyecto = req.params.idProyecto;
     let sqlCalificar = 'INSERT INTO evaluacion_proyectos (id_revisor,id_proyecto,id_pregunta,calificacion) VALUES (?,?,?,?);';
     let sqlRetro = 'INSERT INTO retroalimentacion (id_revisor, id_proyecto, retro) VALUES (?,?,?)';
+    let sqlEvaluacionCompletada = 'UPDATE asignacion_revisores SET evaluacion_completada = 1 WHERE id_proyecto = ?';
     let arrayCalificaciones = [
         req.body.calificacion1,
         req.body.calificacion2,
@@ -461,6 +462,11 @@ app.post('/calificar/:idProyecto', authenticationMiddleware(), (req, res) => {
     con.query(sqlRetro,[idRevisor, idProyecto, req.body.retro], (err, results) => {
         if (err) console.log(err);
     });
+
+    con.query(sqlEvaluacionCompletada,[idProyecto], (err, results) => {
+        if (err) console.log(err);
+    });
+
     res.redirect('/');
 
 });
