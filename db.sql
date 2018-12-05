@@ -123,6 +123,7 @@ select * from respuesta_proyecto;
 
 select * from pregunta;
 
+select * from 
 
 delete from equipo;
 delete from representante;
