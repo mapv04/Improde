@@ -5,7 +5,6 @@
     <title>IMPRODE ADMINISTRADOR</title>
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="/stylesheet/bootstrap.css">
-
     <link rel="stylesheet" href="/stylesheet/dashboard.css">
     <link rel="stylesheet" href="/stylesheet/popup.css">
 </head>
@@ -20,7 +19,10 @@
             </div>
             <ul class="list-unstyled components">
                 <li class="active">
-                    <a>Asignacion Proyectos</a>
+                    <a> Proyectos </a>
+                </li>
+                <li>
+                    <a  href="/adminRevisores"> Revisores </a>
                 </li>
             </ul>
         </nav>
@@ -41,13 +43,14 @@
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">NOMBRE PROYECTO</th>
-                        <th scope="col">REVISOR</th>
                         <th scope="col">INTEGRANTES</th>
+                        <th scope="col">REVISORES</th>
+                        <th scope="col">CALIFICACION</th>
                     </tr>
                 </thead>
                 <tbody id="table">
                     <%  if(proyectos){ %>
-                    <%     proyectos.forEach(element => { %>
+                        <%proyectos.forEach(element => { %>
                     <tr>
                         <td class="id_p" width="10%">
                             IPD18-
@@ -57,25 +60,37 @@
                             <%= element.nombre_proyecto %>
                         </td>
                         <td width="25%">
-                            <%if(element.nombre_revisor){%>
-                            <%=     element.nombre_revisor %>
-                            <%} else{%>
-                            <a class="trigger_popup_fricc" id="agregarRevisor">Agregar revisor</a>
-                            <%}%>
-
-                        </td>
-                        <td width="40%">
                             <% if(integrantes){ %>
-                            <%  integrantes.forEach( element2 =>{ %>
-                            <%  if(element.id_proyecto === element2.id_proyecto){ %>
-                            <%= element2.nombre %>
+                            <%  integrantes.forEach( element3 =>{ %>
+                            <%  if(element.id_proyecto === element3.id_proyecto){ %>
+                            <%= element3.nombre %>
                             <br>
                             <% } %>
                             <% }); %>
                             <%} %>
                         </td>
+                        <td width="25%">
+                            <% if(revisores){ %>
+                                <% let revisorAsignado = false;%>
+                                <% revisores.forEach( element2 =>{ %>
+                                    <% if(element.id_proyecto === element2.id_proyecto){ %>
+                                        <%= element2.nombre_revisor %>
+                                        <% revisorAsignado = true; %>
+                                        <br>
+                                    <% } %>
+                                <% }); %>
+                                <% if(!revisorAsignado){ %>
+                                    <a class="trigger_popup_fricc" id="agregarRevisor">Agregar revisor</a>
+                                <%} %>
+                            <%} %>
+                        </td>
+                        <td width="15%">
+                            <% if(element.calificacion){ %>
+                                <%= element.calificacion %>
+                            <%} %>
+                        </td>
                     </tr>
-                    <% }); %>
+                        <% }); %>
                     <% } %>
                 </tbody>
             </table>
@@ -88,21 +103,56 @@
                     
                     <form action="/agregarRevisor" method="POST">
                         <br>
+                        REVISOR #1 
+                        <br>
                         <input type="hidden" id="id_proy" name="idProyecto" required>
                         <div class="form-group col-lg-12 form-row">
-                            <label for="inputPassword4">Nombre del revisor</label>
-                            <input name="nombreRevisor" type="text" class="form-control" required>
+                            <label for="nombreRevisor1">Nombre del revisor</label>
+                            <input name="nombreRevisor1" type="text" class="form-control" required>
                         </div>
                         <div class="form-group col-lg-12 form-row">
-                            <label for="inputEmail4">Email</label>
-                            <input name="email" type="email" class="form-control" required>
+                            <label for="email1">Email</label>
+                            <input name="email1" type="email" class="form-control" required>
                         </div>
                         <div class="form-group col-lg-12 form-row">
-                            <label for="inputPassword4">Password</label>
-                            <input name="password" type="text" class="form-control" required>
+                            <label for="password1">Password</label>
+                            <input name="password1" type="text" class="form-control" required>
+                        </div>
+
+                        <br><br><br>
+                        REVISOR #2 
+                        <br>
+                        <div class="form-group col-lg-12 form-row">
+                            <label for="nombreRevisor2">Nombre del revisor</label>
+                            <input name="nombreRevisor2" type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group col-lg-12 form-row">
+                            <label for="email2">Email</label>
+                            <input name="email2" type="email" class="form-control" required>
+                        </div>
+                        <div class="form-group col-lg-12 form-row">
+                            <label for="password2">Password</label>
+                            <input name="password2" type="text" class="form-control" required>
+                        </div>
+
+
+                        <br><br><br>
+                        REVISOR #3
+                        <br>
+                        <div class="form-group col-lg-12 form-row">
+                            <label for="nombreRevisor3">Nombre del revisor</label>
+                            <input name="nombreRevisor3" type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group col-lg-12 form-row">
+                            <label for="email3">Email</label>
+                            <input name="email3" type="email" class="form-control" required>
+                        </div>
+                        <div class="form-group col-lg-12 form-row">
+                            <label for="password3">Password</label>
+                            <input name="password3" type="text" class="form-control" required>
                         </div>
                         <br>
-                        <button class="btn  btn-primary btn-lg" >Agregar Revisor</button>
+                        <button class="btn  btn-primary btn-lg" >Agregar Revisores</button>
                     </form>
 
                 </div>

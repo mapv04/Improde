@@ -14,7 +14,7 @@ let con = mysql.createConnection({
     user: 'root',
     port: '3306',
     password: 'car1118',
-    database: 'improde'
+    database: 'improde_production_backup'
 });
 con.connect(err => {
     if (err) console.log(err);
@@ -56,7 +56,7 @@ passport.use(new localStrategy(
 ));
 
 
-app.get('/registro', (req, res) => res.render('Registro.ejs', { error: false, errorMessage: '' }));
+// app.get('/registro', (req, res) => res.render('Registro.ejs', { error: false, errorMessage: '' }));
 app.get('/login', (req, res) => res.render('Login.ejs', { error: false }));
 app.get('/loginFailed', (req, res) => res.render('Login.ejs', { error: true }));
 app.get('/recursos', authenticationMiddleware(), (req, res) => res.render('Recursos.ejs'));
@@ -96,11 +96,13 @@ app.get('/', authenticationMiddleware(), (req, res) => {
     let idProyecto = req.session.passport.user.id_proyecto;
     let nivelUsuario = req.session.passport.user.nivel_usuario;
     let sqlRespuesta = 'SELECT * FROM respuesta_proyecto WHERE id_proyecto = ? ORDER BY id_pregunta';
-    let sqlAdminIntegrantes = 'SELECT a.nombre, e.id_proyecto FROM alumnos a INNER JOIN equipo e ON a.matricula = e.matricula ORDER BY e.id_proyecto ASC';
-    let sqlAdminProyecto = `SELECT p.id_proyecto, p.nombre_proyecto, cr.nombre_revisor  FROM proyecto p
-                            LEFT JOIN asignacion_revisores ar ON ar.id_proyecto = p.id_proyecto
-                            LEFT JOIN cuentas_revisores cr ON cr.id_revisor = ar.id_revisor
-                            ORDER BY id_proyecto ASC`;
+
+    let sqlAdminIntegrantes = 'SELECT a.nombre, e.id_proyecto FROM alumnos a INNER JOIN equipo e ON a.matricula = e.matricula';
+    let sqlRevisores = 'SELECT ar.id_proyecto, cr.nombre_revisor FROM asignacion_revisores ar INNER JOIN cuentas_revisores cr ON ar.id_revisor = cr.id_revisor'
+    let sqlAdminProyecto = `SELECT p.id_proyecto, p.nombre_proyecto, 
+                            (SELECT ROUND(AVG(calificacion) * 20,2) FROM evaluacion_proyectos WHERE id_proyecto = p.id_proyecto)  AS calificacion
+                            FROM proyecto p WHERE correo <> 'admin@improde.com' ORDER BY calificacion DESC`;
+
     let sqlRevisorProyecto = `SELECT cr.id_revisor, cr.nombre_revisor, ar.id_proyecto, p.nombre_proyecto ,ar.evaluacion_completada FROM cuentas_revisores cr 
                             INNER JOIN asignacion_revisores ar ON cr.id_revisor = ar.id_revisor inner join proyecto p 
                             ON ar.id_proyecto = p.id_proyecto where cr.id_revisor = ?`;
@@ -116,7 +118,13 @@ app.get('/', authenticationMiddleware(), (req, res) => {
                     console.log(err);
                     return;
                 }
-                res.render('Administrador.ejs', { proyectos: result1, integrantes: result2 });
+                con.query(sqlRevisores, (err, result3) => {
+                    if (err) {
+                        console.log(err);
+                        return;
+                    }
+                    res.render('Administrador.ejs', { proyectos: result1, integrantes: result2, revisores: result3});
+                });
             });
         });
     } else if (nivelUsuario === 1) {
@@ -129,7 +137,9 @@ app.get('/', authenticationMiddleware(), (req, res) => {
 
         });
     } else if (nivelUsuario === 2) {
-        con.query(sqlRespuesta, [idProyecto], (err, result) => {
+        res.redirect('/logout');
+        
+/*         con.query(sqlRespuesta, [idProyecto], (err, result) => {
             if (err) {
                 console.log(err);
                 return;
@@ -145,12 +155,13 @@ app.get('/', authenticationMiddleware(), (req, res) => {
                 respuesta8: result[7].respuesta,
                 respuesta9: result[8].respuesta
             });
-        });
+        }); */
     } else {
-        res.redirect('/login');
+        res.redirect('/logout');
     }
 
 });
+
 
 app.get('/evaluacion/:idProyecto', authenticationMiddleware(), (req, res) => {
     if(req.session.passport.user.nivel_usuario!==1){
@@ -180,6 +191,32 @@ app.get('/evaluacion/:idProyecto', authenticationMiddleware(), (req, res) => {
     });
 });
 
+app.get('/adminRevisores', authenticationMiddleware(), (req, res) => {
+    if(req.session.passport.user.nivel_usuario!==0){
+        res.redirect('/');
+        return;
+    }
+    let sqlCuentas = 'SELECT * FROM cuentas_revisores ';
+    let sqlAsignaciones = `SELECT ar.id_revisor, ar.id_proyecto, ar.evaluacion_completada, p.nombre_proyecto FROM asignacion_revisores ar
+                            INNER JOIN proyecto p ON ar.id_proyecto = p.id_proyecto`;
+    let cuentas = {};
+    let asignaciones = {};
+
+    con.query(sqlCuentas, (err, results) => {
+        if (err) console.log(err);
+        if (results) {
+            cuentas = results;
+        }
+        con.query(sqlAsignaciones, (err2, results2) => {
+            if (err2) console.log(err);
+            if (results2) {
+                asignaciones = results2;
+            }
+            res.render('AdministradorRevisores.ejs', { cuentas: cuentas, asignaciones: asignaciones })
+        });
+    });
+
+});
 
 app.get('/misdatos', authenticationMiddleware(), (req, res) => {
     if(req.session.passport.user.nivel_usuario!==2){
@@ -377,60 +414,67 @@ app.post('/agregarRevisor', authenticationMiddleware(), (req, res) => {
         return;
     }
     let idProyecto = req.body.idProyecto.replace('IPD18-','').match(/\d+/g)[0];
-    let nombreRevisor = req.body.nombreRevisor;
-    let email = req.body.email.toLowerCase();
-
-    let password = req.body.password;
-    let sqlCuentaRevisor = 'INSERT INTO cuentas_revisores(correo_revisor,contrasena_revisor,nombre_revisor) VALUES(?)';
+    let nombreRevisor = [req.body.nombreRevisor1, req.body.nombreRevisor2, req.body.nombreRevisor3];
+    let email = [req.body.email1.toLowerCase(), req.body.email2.toLowerCase(), req.body.email3.toLowerCase()];
+    let password = [req.body.password1, req.body.password2, req.body.password3];
+    
+    let sqlCuentaRevisor = 'INSERT INTO cuentas_revisores(correo_revisor,contrasena_revisor,nombre_revisor) VALUES (?)';
     let sqlAsignacionRevisor = 'INSERT INTO asignacion_revisores (id_revisor, id_proyecto) VALUES(?)';
     let sqlCheckRevisorEmail = 'SELECT id_revisor, nombre_revisor  FROM cuentas_revisores WHERE correo_revisor = ?'
     let sqlCheckRevisorNombre = 'SELECT correo_revisor, nombre_revisor FROM cuentas_revisores WHERE nombre_revisor = ?';
+    let idRevisor = [];
 
-    con.query(sqlCheckRevisorEmail, [[email]], (err, result) => {
-        if (err) {
-            console.log(err);
-            return;
-        }
-
-        if(result[0]){
-             if(nombreRevisor.toLowerCase().replace(/\s/g,'')===result[0].nombre_revisor.toLowerCase().replace(/\s/g,'')){
-                queryAsignacion(result[0].id_revisor);
-            }
-            else{
-                res.redirect('/');
-            }
-        } else{
-            con.query(sqlCheckRevisorNombre, [[nombreRevisor]], (err, result2) => {
-                if (err) {
-                    console.log(err);
-                    return;
-                }
-                if(!result2[0]){
-                    con.query(sqlCuentaRevisor, [[email, password, nombreRevisor]], (err, result3) => {
-                        if (err) {
-                            console.log(err);
-                            return;
-                        }
-                        queryAsignacion(result3.insertId);
-                    });
-                }
-                else{
-                    res.redirect('/');
-                }
-            });
-        } 
-    });
-   
-    function queryAsignacion(lastInsertID){
-        con.query(sqlAsignacionRevisor, [[lastInsertID,idProyecto]], (err, resul) => {
+    for(let i=0;i<3;i++){
+        con.query(sqlCheckRevisorEmail, [[email[i]]], (err, result) => {
             if (err) {
                 console.log(err);
                 return;
             }
-            res.redirect('/');
+            if(result[0]){
+                 if(nombreRevisor[i].toLowerCase().replace(/\s/g,'')===result[0].nombre_revisor.toLowerCase().replace(/\s/g,'')){
+                    idRevisor.push(result[0].id_revisor);
+                    if(idRevisor.length===3) asignarRevisores();
+                } else if(i===2 && idRevisor.length!==3){
+                    res.render('RegistroRevisorFallo.ejs');
+                }
+                
+            } else{
+                con.query(sqlCheckRevisorNombre, [[nombreRevisor[i]]], (err, result2) => {
+                    if (err) {
+                        console.log(err);
+                        return;
+                    }
+
+                    if(!result2[0]){
+                        con.query(sqlCuentaRevisor, [[email[i],password[i],nombreRevisor[i]]], (err, result3) => {
+                            if (err) {
+                                console.log(err);
+                                return;
+                            }
+                            idRevisor.push(result3.insertId);
+                            if(idRevisor.length===3) asignarRevisores();
+                        });
+                    }  else if(i===2 && idRevisor.length!==3){
+                        res.render('RegistroRevisorFallo.ejs');
+                    }
+                });
+            }
         });
     }
+
+    function asignarRevisores(){
+        for(let i=0; i<3; i++){
+           con.query(sqlAsignacionRevisor, [[idRevisor[i],idProyecto]], (err, resul) => {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+            });
+        }
+        res.redirect('/');
+    }
 });
+
 
 app.post('/calificar/:idProyecto', authenticationMiddleware(), (req, res) => {
     if(req.session.passport.user.nivel_usuario!==1){
@@ -441,7 +485,7 @@ app.post('/calificar/:idProyecto', authenticationMiddleware(), (req, res) => {
     let idProyecto = req.params.idProyecto;
     let sqlCalificar = 'INSERT INTO evaluacion_proyectos (id_revisor,id_proyecto,id_pregunta,calificacion) VALUES (?,?,?,?);';
     let sqlRetro = 'INSERT INTO retroalimentacion (id_revisor, id_proyecto, retro) VALUES (?,?,?)';
-    let sqlEvaluacionCompletada = 'UPDATE asignacion_revisores SET evaluacion_completada = 1 WHERE id_proyecto = ?';
+    let sqlEvaluacionCompletada = 'UPDATE asignacion_revisores SET evaluacion_completada = 1 WHERE id_revisor = ? AND id_proyecto = ?';
     let arrayCalificaciones = [
         req.body.calificacion1,
         req.body.calificacion2,
@@ -463,7 +507,7 @@ app.post('/calificar/:idProyecto', authenticationMiddleware(), (req, res) => {
         if (err) console.log(err);
     });
 
-    con.query(sqlEvaluacionCompletada,[idProyecto], (err, results) => {
+    con.query(sqlEvaluacionCompletada,[idRevisor,idProyecto], (err, results) => {
         if (err) console.log(err);
     });
 
@@ -475,7 +519,6 @@ app.post('/calificar/:idProyecto', authenticationMiddleware(), (req, res) => {
 app.post('/login', passport.authenticate('local',
     {
         successRedirect: '/',
-
         failureRedirect: '/loginFailed'
     }));
 
@@ -492,7 +535,6 @@ passport.deserializeUser(function (id, done) {
 function authenticationMiddleware() {
     return (req, res, next) => {
         if (req.isAuthenticated()) {
-            //           console.log(`req.session.passport.user: ${JSON.stringify(req.session.passport)}`);
             req.session.cookie.maxAge = 10800000;
             return next();
         }

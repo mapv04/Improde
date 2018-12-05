@@ -1,0 +1,123 @@
+<!DOCTYPE hmtl>
+<html>
+
+<head>
+    <title>IMPRODE ADMINISTRADOR</title>
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="/stylesheet/bootstrap.css">
+    <link rel="stylesheet" href="/stylesheet/dashboard.css">
+    <link rel="stylesheet" href="/stylesheet/popup.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar" class="active">
+            <div class="sidebar-header">
+                <img src="/img/univaLogo.png" alt="" class="univa-logo">
+                <h3>IMPRODE</h3>
+            </div>
+            <ul class="list-unstyled components">
+                <li >
+                    <a href="/" > Proyectos </a>
+                </li>
+                <li class="active">
+                    <a> Revisores </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="main">
+            <button type="button" id="sidebarCollapse" class="btn btn-light">
+                <img src="/img/univaLogo.png" alt="" class="univa-logo"> MENU
+            </button>
+            <span>Listado de Revisores</span>
+            <span id="logout"><a href="/logout">Cerrar Sesión</a></span>
+            <br> <br><br>
+
+            <table class="table" id="tabla-postulacion">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">NOMBRE </th>
+                        <th scope="col">CORREO </th>
+                        <th scope="col">PASSWORD </th>
+                        <th scope="col">PROYECTOS ASIGNADOS</th>
+                        <th scope="col">ESTATUS DE REVISION</th>
+                    </tr>
+                </thead>
+                <tbody id="table">
+                    <% if(cuentas){ %>
+                        <% cuentas.forEach(element => {%>
+                            <tr>
+                                <td> <%= element.id_revisor %></td>
+                                <td> <%= element.nombre_revisor %></td>
+                                <td> <%= element.correo_revisor %></td>
+                                <td> <%= element.contrasena_revisor %></td>
+                                <% if(asignaciones){ %>
+                                    <td>
+                                    <% asignaciones.forEach(element2 => { %>
+                                        <% if(element2.id_revisor===element.id_revisor){ %>
+                                             <%= element2.nombre_proyecto %> <br>
+                                        <% } %>
+                                    <% }); %>
+                                    </td>
+                                    <td>
+                                        <% asignaciones.forEach(element3 => { %>
+                                            <% if(element3.id_revisor===element.id_revisor){ %>
+                                                <% if(element3.evaluacion_completada==1){ %>
+                                                        Completada <br>
+                                                <% } else{ %>
+                                                        PENDIENTE <br>
+                                                <% } %>
+                                            <% } %>
+                                        <% }); %>
+                                    </td>
+                                <% } %>
+                            </tr>
+                        <% }); %>
+                    <% } %>
+                </tbody>
+            </table>
+            <br>
+            </div>
+        </div>
+        
+
+        <!-- jQuery CDN - Slim version (=without AJAX) -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+        <!-- Popper.JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+            crossorigin="anonymous"></script>
+        <!-- Bootstrap JS -->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+            crossorigin="anonymous"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#sidebarCollapse').on('click', function () {
+                    $('#sidebar').toggleClass('active');
+                });
+            });
+/*
+            document.getElementById('busqueda').addEventListener('input', loadUsers);
+            function loadUsers() {
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', '/json?nombreproyecto=test', true);
+                xhr.onload = function () {
+                    var users = JSON.parse(this.responseText);
+                    console.log(users);
+                    if (users.integrantes && users.proyectos) {
+                        let output = '';
+                        users.integrs
+                        document.getElementById('table').innerHTML = output;
+                    }
+                }
+                xhr.send();
+            } */
+        </script>
+</body>
+
+</html>
