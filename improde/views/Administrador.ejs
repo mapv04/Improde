@@ -22,7 +22,7 @@
                     <a> Proyectos </a>
                 </li>
                 <li>
-                    <a  href="/adminRevisores"> Revisores </a>
+                    <a href="/adminRevisores"> Revisores </a>
                 </li>
             </ul>
         </nav>
@@ -35,7 +35,7 @@
             <span>Listado de Proyectos</span>
             <span id="logout"><a href="/logout">Cerrar Sesión</a></span>
             <br> <br><br>
-<!--          <div style="width: 80%; font-size: 16px; text-align: left; margin-left: 150px;">
+            <!--          <div style="width: 80%; font-size: 16px; text-align: left; margin-left: 150px;">
                  Busqueda por nombre proyecto 
                 <input type="text" id="busqueda"></div> -->
             <table class="table" id="tabla-postulacion">
@@ -44,19 +44,19 @@
                         <th scope="col">ID</th>
                         <th scope="col">NOMBRE PROYECTO</th>
                         <th scope="col">INTEGRANTES</th>
-                        <th scope="col">REVISORES</th>
-                        <th scope="col">CALIFICACION</th>
+                        <th scope="col">REVISOR ASIGNADO Y CALIFICACION</th>
+                        <th scope="col">CALIFICACION TOTAL</th>
                     </tr>
                 </thead>
                 <tbody id="table">
                     <%  if(proyectos){ %>
-                        <%proyectos.forEach(element => { %>
+                    <%proyectos.forEach(element => { %>
                     <tr>
                         <td class="id_p" width="10%">
                             IPD18-
                             <%= element.id_proyecto %>
                         </td>
-                        <td width="25%">
+                        <td width="23%">
                             <%= element.nombre_proyecto %>
                         </td>
                         <td width="25%">
@@ -69,41 +69,237 @@
                             <% }); %>
                             <%} %>
                         </td>
-                        <td width="25%">
+                        <td width="30%">
                             <% if(revisores){ %>
-                                <% let revisorAsignado = false;%>
-                                <% revisores.forEach( element2 =>{ %>
-                                    <% if(element.id_proyecto === element2.id_proyecto){ %>
-                                        <%= element2.nombre_revisor %>
-                                        <% revisorAsignado = true; %>
-                                        <br>
-                                    <% } %>
-                                <% }); %>
-                                <% if(!revisorAsignado){ %>
-                                    <a class="trigger_popup_fricc" id="agregarRevisor">Agregar revisor</a>
-                                <%} %>
+                            <% let revisorAsignado = false;%>
+                            <% revisores.forEach( element2 =>{ %>
+                            <% if(element.id_proyecto === element2.id_proyecto){ %>
+                            <%= element2.nombre_revisor %>
+                            <% revisorAsignado = true; %>
+                            <% if(element2.calificacion_revisor){ %>
+                                <div class="trigger_popup_fricc2" id="agregarRevisor" >
+                                    <input class="id_revisor"  type="hidden" value="<%=element2.id_revisor %>">
+                                    <%= element2.calificacion_revisor %>
+                                </div>
+                            <% } else{ %>
+                            <div style="font-size: 17px; color: grey;">PENDIENTE POR CALIFICAR</div>
+                            <% } %>
+                            <br>
+                            <% } %>
+                            <% }); %>
+                            <% if(!revisorAsignado){ %>
+                            <a class="trigger_popup_fricc" id="agregarRevisor">Agregar revisor</a>
+                            <%} %>
                             <%} %>
                         </td>
-                        <td width="15%">
+                        <td width="12%" style="text-align: center;">
                             <% if(element.calificacion){ %>
-                                <%= element.calificacion %>
+                            <%= element.calificacion %>
                             <%} %>
                         </td>
                     </tr>
-                        <% }); %>
+                    <% }); %>
                     <% } %>
                 </tbody>
             </table>
             <br>
 
+
+
+
+
+
+
+
+
+
+
+            <div class="hover_bkgr_fricc2">
+                <span class="helper"></span>
+                <div>
+                    <div class="popupCloseButton">X</div>
+                    <table class="table" id="tabla-postulacion">
+                        <tbody>
+                            <tr class="thead-light">
+                                <th scope="row" colspan="2">
+                                    Modelo de Impacto <br>
+                                    ¿Qué tipo de impacto quieres tener como empresa/organización (impacto social,
+                                    impacto
+                                    personal, impacto local, impacto en una comunidad, impacto ambiental, etc.)? <br>
+                                    ¿Cómo mides tu impacto?
+                                </th>
+                            </tr>
+                            <tr>
+                                <td scope="row" colspan="2"><textarea class="form-control" rows="5" disabled id="respuesta1"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td scope="row" colspan="2">
+                                    <div id="calificacion1"></div>
+                                </td>
+                            </tr>
+
+
+                            <tr class="thead-light">
+                                <th scope="row" style="width: 50%">
+                                    Propuesta de valor<br>
+                                    ¿Qué hace única la propuesta de tu organización? <br>
+                                    ¿Quién más está en el espacio que te
+                                    interesa, y por qué eres mejor?
+                                </th>
+                                <th scope="row" style="width: 50%">
+                                    Aliados<br>
+                                    ¿Con quién trabajas para crear impacto positivo para tu negocio o para el contexto
+                                    en
+                                    general? <br>
+                                    ¿Con quién no trabajarías?<br>
+                                    ¿Quiénes son tus clientes, fundadores y red de contactos?
+                                </th>
+                            </tr>
+                            <tr class="thead-light">
+                                <td scope="row"><textarea class="form-control" rows="6" disabled id="respuesta2"></textarea></td>
+                                <td scope="row"><textarea class="form-control" rows="6" disabled id="respuesta3"></textarea></td>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="row" >
+                                    <div id="calificacion2"></div>
+                                </td>
+                                <td scope="row" >
+                                    <div id="calificacion3"></div>
+                                </td>
+                            </tr>
+
+
+                            <tr class="thead-light">
+                                <th scope="row">
+                                    Productos y Servicios<br>
+                                    ¿Qué estas creando? <br>
+                                    ¿Cómo te aseguras que tu producto o servicio funciona bien, y produce el impacto
+                                    que
+                                    estas esperando lograr?
+                                </th>
+                                <th scope="row">
+                                    Talento y Modelo Operacional<br>
+                                    ¿Quién hace el trabajo? <br>
+                                    ¿Cómo necesitan ser el organigrama organizacional y la estructura de costos de tu
+                                    organización para lograr las metas interpuestas en tu modelo
+                                    de impacto y propuesta de valor?
+                                </th>
+                            </tr>
+                            <tr class="thead-light">
+                                <td scope="row"><textarea class="form-control" rows="6" disabled id="respuesta4"></textarea></td>
+                                <td scope="row"><textarea class="form-control" rows="6" disabled id="respuesta5"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td scope="row" >
+                                    <div id="calificacion4"></div>
+                                </td>
+                                <td scope="row" >
+                                    <div id="calificacion5"></div>
+                                </td>
+                            </tr>
+
+
+                            <tr class="thead-light">
+                                <th scope="row" colspan="2">
+                                    Modelo de ventas<br>
+                                    ¿Cómo se financia tu trabajo?<br>
+                                    ¿Cómo se puede financiarse creativamente?
+                                </th>
+                            </tr>
+                            <tr>
+                                <td scope="row" colspan="2"><textarea class="form-control" rows="5" disabled id="respuesta6"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td scope="row" colspan="2">
+                                    <div id="calificacion6"></div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="table" id="tabla-postulacion">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col" style="width: 35%">Pregunta</th>
+                                <th scope="col" style="width: 65%">Respuesta</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td scope="row">¿Te consideras un emprendedor? ¿Por qué? </td>
+                                <td><textarea class="form-control" rows="5" disabled id="respuesta7"> </textarea></td>
+                            </tr>
+                            <tr>
+                                <td scope="row" colspan="2">
+                                    <div id="calificacion7"></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td scope="row">¿Qué mensaje le darías al cliente para promover el servicio que
+                                    propones?
+                                </td>
+                                <td><textarea class="form-control" rows="5" disabled id="respuesta8"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td scope="row" colspan="2">
+                                    <div id="calificacion8"></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td scope="row"> Te invitamos a que presentes tu proyecto y tu equipo en un video de no
+                                    más
+                                    de 2 minutos
+                                    <br><br>
+                                    Nota: puedes subirlo a cualquier plataforma de videos como youtube y poner el link
+                                    en
+                                    el espacio de texto, por ejemplo: https://www.youtube.com/watch?v=klVWGHtRTuE
+                                </td>
+                                <td><textarea class="form-control" rows="5" disabled id="respuesta9"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td scope="row" colspan="2">
+                                    <div id="calificacion9"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  colspan="2" style="text-align: center;">RETROALIMENTACION</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><textarea  class="form-control" id="retro" rows="6" disabled ></textarea></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <div class="hover_bkgr_fricc">
                 <span class="helper"></span>
                 <div>
                     <div class="popupCloseButton">X</div>
-                    
                     <form action="/agregarRevisor" method="POST">
                         <br>
-                        REVISOR #1 
+                        REVISOR #1
                         <br>
                         <input type="hidden" id="id_proy" name="idProyecto" required>
                         <div class="form-group col-lg-12 form-row">
@@ -120,7 +316,7 @@
                         </div>
 
                         <br><br><br>
-                        REVISOR #2 
+                        REVISOR #2
                         <br>
                         <div class="form-group col-lg-12 form-row">
                             <label for="nombreRevisor2">Nombre del revisor</label>
@@ -152,16 +348,14 @@
                             <input name="password3" type="text" class="form-control" required>
                         </div>
                         <br>
-                        <button class="btn  btn-primary btn-lg" >Agregar Revisores</button>
+                        <button class="btn  btn-primary btn-lg">Agregar Revisores</button>
                     </form>
-
                 </div>
             </div>
         </div>
 
         <!-- jQuery CDN - Slim version (=without AJAX) -->
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <!-- Popper.JS -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
             crossorigin="anonymous"></script>
@@ -177,13 +371,54 @@
 
                 $(".trigger_popup_fricc").click(function () {
                     $('.hover_bkgr_fricc').show();
-                    $('#id_proy').val($(this).closest('tr').find('td.id_p').text())
+                    $('#id_proy').val($(this).closest('tr').find('td.id_p').text());
                 });
-                
+
+
+                $(".trigger_popup_fricc2").click(function () {
+                    $('.hover_bkgr_fricc2').show();
+                    evaluacionRevisor($(this).closest('tr').find('td.id_p').text(), $(this).find('.id_revisor').val());
+                });
+
+
                 $('.popupCloseButton').click(function () {
                     $('.hover_bkgr_fricc').hide();
+                    $('.hover_bkgr_fricc2').hide();
                 });
+
+
             });
+
+            function evaluacionRevisor(idProyecto, idRevisor){
+                let idProyectoMin = idProyecto.replace('IPD18-','').match(/\d+/g)[0];
+                $.get('/adminresultados',{ idProyectoMin, idRevisor}, function( data ) {
+                    let respuesta = data.respuestas;
+                    let calificacion = data.calificacion;
+
+                    $('#respuesta1').text(respuesta[0].respuesta);
+                    $('#respuesta2').text(respuesta[1].respuesta);
+                    $('#respuesta3').text(respuesta[2].respuesta);
+                    $('#respuesta4').text(respuesta[3].respuesta);
+                    $('#respuesta5').text(respuesta[4].respuesta);
+                    $('#respuesta6').text(respuesta[5].respuesta);
+                    $('#respuesta7').text(respuesta[6].respuesta);
+                    $('#respuesta8').text(respuesta[7].respuesta);
+                    $('#respuesta9').text(respuesta[8].respuesta);
+
+                    $('#calificacion1').text('CALIFICACION:  ' + calificacion[0].calificacion);
+                    $('#calificacion2').text('CALIFICACION:  ' + calificacion[1].calificacion);
+                    $('#calificacion3').text('CALIFICACION:  ' + calificacion[2].calificacion);
+                    $('#calificacion4').text('CALIFICACION:  ' + calificacion[3].calificacion);
+                    $('#calificacion5').text('CALIFICACION:  ' + calificacion[4].calificacion);
+                    $('#calificacion6').text('CALIFICACION:  ' + calificacion[5].calificacion);
+                    $('#calificacion7').text('CALIFICACION:  ' + calificacion[6].calificacion);
+                    $('#calificacion8').text('CALIFICACION:  ' + calificacion[7].calificacion);
+                    $('#calificacion9').text('CALIFICACION:  ' + calificacion[8].calificacion);
+                    
+                    $('#retro').text(data.retro[0].retro);
+
+                }); 
+            }
 /*
             document.getElementById('busqueda').addEventListener('input', loadUsers);
             function loadUsers() {

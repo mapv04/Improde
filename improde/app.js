@@ -92,13 +92,55 @@ app.get('/logout', (req, res) => {
 
 }); */
 
+app.get('/adminresultados', authenticationMiddleware(), (req, res) => {
+    if(req.session.passport.user.nivel_usuario!==0){
+        res.redirect('/');
+        return;
+    }
+    let idProyecto = req.query.idProyectoMin;
+    let idRevisor = req.query.idRevisor;
+    let sqlRespuestas = 'SELECT respuesta FROM respuesta_proyecto WHERE id_proyecto = ? ORDER BY id_pregunta ASC';
+    let sqlEvaluacion = 'SELECT (calificacion * 2) AS calificacion  FROM evaluacion_proyectos WHERE id_proyecto = ? AND id_revisor = ? ORDER BY id_pregunta ASC';
+    let sqlRetro = 'SELECT retro FROM  retroalimentacion WHERE  id_proyecto = ? AND id_revisor = ?'
+
+    con.query(sqlRespuestas, [idProyecto], (err, result1) => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        con.query(sqlEvaluacion, [idProyecto,idRevisor], (err, result2) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            con.query(sqlRetro, [idProyecto,idRevisor], (err, result3) => {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                res.send( {respuestas: result1, calificacion: result2, retro: result3} );
+            });
+        });
+    });
+
+    
+});
+
+
+
 app.get('/', authenticationMiddleware(), (req, res) => {
     let idProyecto = req.session.passport.user.id_proyecto;
     let nivelUsuario = req.session.passport.user.nivel_usuario;
+
     let sqlRespuesta = 'SELECT * FROM respuesta_proyecto WHERE id_proyecto = ? ORDER BY id_pregunta';
 
     let sqlAdminIntegrantes = 'SELECT a.nombre, e.id_proyecto FROM alumnos a INNER JOIN equipo e ON a.matricula = e.matricula';
-    let sqlRevisores = 'SELECT ar.id_proyecto, cr.nombre_revisor FROM asignacion_revisores ar INNER JOIN cuentas_revisores cr ON ar.id_revisor = cr.id_revisor'
+
+    let sqlRevisores = `SELECT  ar.id_revisor, ar.id_proyecto, cr.nombre_revisor, 
+                        (SELECT ROUND(AVG(ep.calificacion) * 20,2 ) FROM  evaluacion_proyectos ep  
+                        WHERE ep.id_proyecto = ar.id_proyecto AND ep.id_revisor =  ar.id_revisor GROUP BY ep.id_proyecto,ep.id_revisor) AS calificacion_revisor FROM asignacion_revisores ar 
+                        INNER JOIN cuentas_revisores cr ON ar.id_revisor = cr.id_revisor ORDER BY calificacion_revisor DESC`
+
     let sqlAdminProyecto = `SELECT p.id_proyecto, p.nombre_proyecto, 
                             (SELECT ROUND(AVG(calificacion) * 20,2) FROM evaluacion_proyectos WHERE id_proyecto = p.id_proyecto)  AS calificacion
                             FROM proyecto p WHERE correo <> 'admin@improde.com' ORDER BY calificacion DESC`;
@@ -422,6 +464,7 @@ app.post('/agregarRevisor', authenticationMiddleware(), (req, res) => {
     let sqlAsignacionRevisor = 'INSERT INTO asignacion_revisores (id_revisor, id_proyecto) VALUES(?)';
     let sqlCheckRevisorEmail = 'SELECT id_revisor, nombre_revisor  FROM cuentas_revisores WHERE correo_revisor = ?'
     let sqlCheckRevisorNombre = 'SELECT correo_revisor, nombre_revisor FROM cuentas_revisores WHERE nombre_revisor = ?';
+    let registroFallo = false;
     let idRevisor = [];
 
     for(let i=0;i<3;i++){
@@ -434,7 +477,8 @@ app.post('/agregarRevisor', authenticationMiddleware(), (req, res) => {
                  if(nombreRevisor[i].toLowerCase().replace(/\s/g,'')===result[0].nombre_revisor.toLowerCase().replace(/\s/g,'')){
                     idRevisor.push(result[0].id_revisor);
                     if(idRevisor.length===3) asignarRevisores();
-                } else if(i===2 && idRevisor.length!==3){
+                } else if(!registroFallo){
+                    registroFallo = true;
                     res.render('RegistroRevisorFallo.ejs');
                 }
                 
@@ -454,8 +498,9 @@ app.post('/agregarRevisor', authenticationMiddleware(), (req, res) => {
                             idRevisor.push(result3.insertId);
                             if(idRevisor.length===3) asignarRevisores();
                         });
-                    }  else if(i===2 && idRevisor.length!==3){
+                    }  else if(!registroFallo){
                         res.render('RegistroRevisorFallo.ejs');
+                        registroFallo = true;
                     }
                 });
             }
