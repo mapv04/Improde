@@ -68,6 +68,16 @@ CREATE TABLE cuentas_revisores (
 	contrasena_revisor text NOT NULL,
 	nombre_revisor text NOT NULL,
 	nivel_usuario_revisor int DEFAULT 1,
+    /*
+    apellido text NOT NULL,
+    telefono_oficina text NOT NULL,
+    telefono_celular text NOT NULL,
+    sexo text NOT NULL,
+    nacimiento date NOT NULL,
+    curriculum text NOT NULL,
+    facebook text NOT NULL,
+    ***(En otra tabla)*** temas text NOT NULL,
+    */
 	PRIMARY KEY (id_revisor)
 );
 

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <link rel="stylesheet" href="/improde/public/stylesheet/bootstrap.css">
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="/improde/public/stylesheet/dashboard.css">
+    </head>
+    <body>
+        <div class="wrapper">
+              <nav id="sidebar">
+            <div class="sidebar-header">
+                <img src="/improde/public/img/univaLogo.png" alt="" class="univa-logo">
+                <h3>IMPRODE</h3>
+            </div>
+            <ul class="list-unstyled components">
+                <li>
+                    <a>Proyectos</a>
+                </li>
+                <li class="active">
+                    <a href="#">Datos Personales</a>
+                </li>
+            </ul>
+        </nav>
+
+            <div id="main">
+                <button type="button" id="sidebarCollapse" class="btn btn-light">
+                    <img src="/improde/public/img/univaLogo.png" alt="" class="univa-logo"> MENU
+                </button>
+                <span id="logout"><a href="/logout">Cerrar Sesión</a></span>
+                <br> <br> <br>
+
+                <div class="titulo-datos"></div>
+                 <br>
+                 <form action="" method="POST">
+                     <table class="table" id="tabla-postulacion">
+                        <tbody>
+                            <tr class="thead-light">
+                                <th scope="row" colspan="2">
+                                    Nombre <br>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <input type="text" class="form-control" name="nombre" required>
+                                </td>
+                            </tr>
+                            
+                            <tr class="thead-light">
+                                <th scope="row" colspan="2">
+                                    Apellidos <br>
+                                </th>
+                            </tr>
+                            <tr scope="row">
+                                <td scope="row" >
+                                    <input type="text" class="form-control" name="apellido" required>
+                                </td>
+                            </tr>
+                            <tr class="thead-light">
+                                <th scope="row" colspan="2">
+                                    Teléfono de oficina <br>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <input type="text" class="form-control" name="telOficina" required>
+                                </td>
+                            </tr>
+                            <tr class="thead-light">
+                                <th scope="row" colspan="2">
+                                    Teléfono celular <br>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <input type="text" class="form-control" name="telCelular" required>
+                                </td>
+                            </tr>
+                            <tr class="thead-light">
+                                <th scope="row" colspan="2">
+                                    Sexo <br>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    Masculino  <input type="radio" name ="sexo" value="masculino" style="margin-right: 100px;" required>
+                                    Femenino   <input type="radio" name ="sexo" value="femenino" style="margin-right: 100px;" required>
+                                </td>
+                            </tr>
+                            <tr class="thead-light">
+                                <th scope="row" colspan="2">
+                                    Fecha de nacimiento <br>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <input type="date" min="1905-01-01" max="2018-01-01" name="fecha" required>
+                                </td>
+                            </tr>
+                            <tr class="thead-light">
+                                <th scope="row" colspan="2">
+                                    Link con curriculum <br>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <input type="text" class="form-control" name="curriculum" required>
+                                </td>
+                            </tr>
+                            <tr class="thead-light">
+                               <th scope="row" colspan="2">
+                                Perfil de Facebook <br>
+                                </th>
+                            </tr>
+                            <tr>
+                               <td scope="row">
+                                <input type="text" class="form-control" name="facebook" required> 
+                                </td>
+                            </tr>
+                    <tr class="thead-light">
+                                <th scope="row" colspan="2">
+                                    Temas <br>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <input type="checkbox" name ="temas" value="" style="margin:10px" required> Legal y gobierno corporativo <br>
+                                    <input type="checkbox" name ="temas" value="" style="margin:10px;" required> Finanzas <br>
+                                    <input type="checkbox" name ="temas" value="" style="margin: 10px;" required> Comercialización <br>
+                                    <input type="checkbox" name ="temas" value="" style="margin: 10px;" required> Operación <br>
+                                    <input type="checkbox" name ="temas" value="" style="margin: 10px;" required>  Perfil emprendedor <br>
+                                    <input type="checkbox" name ="temas" value="" style="margin: 10px;" required> Pláticas interactivas <br>
+                                    <input type="checkbox" name ="temas" value="" style="margin: 10px;" required> Consultor integral <br>
+                                    <input type="checkbox" name ="temas" value="" style="margin: 10px;" required> Administración <br>
+                                    <input type="checkbox" name ="temas" value="" style="margin: 10px;" required> Validación y Prototipado <br>
+                                </td>
+                            </tr>
+                        </tbody>
+                     </table>
+                     <button class="btn btn-primary btn-lg" id="boton-guardar">Guardar</button>
+                
+                 </form>
+            
+            </div>
+            
+        </div>
+                <!-- jQuery CDN - Slim version (=without AJAX) -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+        <!-- Popper.JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+            crossorigin="anonymous"></script>
+        <!-- Bootstrap JS -->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+            crossorigin="anonymous"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#sidebarCollapse').on('click', function () {
+                    $('#sidebar').toggleClass('active');
+                });
+            });
+        </script>
+        
+    </body>
+    
+</html>
