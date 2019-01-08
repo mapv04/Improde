@@ -109,6 +109,11 @@ CREATE TABLE retroalimentacion (
 	FOREIGN KEY (id_proyecto) REFERENCES proyecto(id_proyecto)
 );
 
+CREATE TABLE profesor_asignacion_proyecto (
+id_proyecto BIGINT NOT NULL,
+nombre_profesor text NOT NULL,
+FOREIGN KEY  (id_proyecto) REFERENCES proyecto(id_proyecto)
+);
 
 ALTER TABLE proyecto add nivel_usuario int DEFAULT 2 ;
 ALTER TABLE asignacion_revisores ADD evaluacion_completada int DEFAULT 0;

@@ -56,7 +56,8 @@ passport.use(new localStrategy(
 ));
 
 
-// app.get('/registro', (req, res) => res.render('Registro.ejs', { error: false, errorMessage: '' }));
+
+app.get('/registro', (req, res) => res.render('Registro.ejs', { error: false, errorMessage: '' }));
 app.get('/login', (req, res) => res.render('Login.ejs', { error: false }));
 app.get('/loginFailed', (req, res) => res.render('Login.ejs', { error: true }));
 app.get('/recursos', authenticationMiddleware(), (req, res) => res.render('Recursos.ejs'));
@@ -179,9 +180,7 @@ app.get('/', authenticationMiddleware(), (req, res) => {
 
         });
     } else if (nivelUsuario === 2) {
-        res.redirect('/logout');
-        
-/*         con.query(sqlRespuesta, [idProyecto], (err, result) => {
+         con.query(sqlRespuesta, [idProyecto], (err, result) => {
             if (err) {
                 console.log(err);
                 return;
@@ -197,7 +196,7 @@ app.get('/', authenticationMiddleware(), (req, res) => {
                 respuesta8: result[7].respuesta,
                 respuesta9: result[8].respuesta
             });
-        }); */
+        }); 
     } else {
         res.redirect('/logout');
     }
@@ -279,7 +278,7 @@ app.get('/misdatos', authenticationMiddleware(), (req, res) => {
 });
 
 ////////////////////////////////////////////////
-/*
+
  app.post('/registro', (req, res) => {
     let checkProyecto = 'SELECT  nombre_proyecto FROM  proyecto WHERE nombre_proyecto = ?';
     let checkCorreo = 'SELECT  correo FROM  proyecto WHERE correo = ?';
@@ -290,6 +289,7 @@ app.get('/misdatos', authenticationMiddleware(), (req, res) => {
     let sqlRepresentante = 'INSERT INTO representante (id_proyecto, matricula) VALUES ?';
     let sqlEquipo = 'INSERT INTO equipo (id_proyecto, matricula) VALUES ?';
     let sqlRespuesta = 'INSERT INTO respuesta_proyecto (id_proyecto, id_pregunta, respuesta) VALUES ?';
+    let sqlProfesorAsignado = 'INSERT INTO profesor_asignacion_proyecto (id_proyecto, nombre_profesor) VALUES ?';
 
     let m1 = Number(req.body.matricula1);
     let m2 = Number(req.body.matricula2);
@@ -417,10 +417,18 @@ app.get('/misdatos', authenticationMiddleware(), (req, res) => {
                 console.log(err);
                 return;
             }
+        });
+
+        let profesorAsignacion = [[lastInsertID, req.body.nombreMaestro]];
+        con.query(sqlProfesorAsignado, [profesorAsignacion], (err, result) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
             res.render('RegistroCorrecto.ejs');
         });
     }
-}); */
+}); 
 ////////////////////////////////////////////
 
 app.post('/postulacion', authenticationMiddleware(), (req, res) => {

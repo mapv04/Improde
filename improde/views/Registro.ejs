@@ -33,6 +33,12 @@
         <form action="/registro" method="POST" >
             <div id="contain">
                 <p id="title">Datos del proyecto</p>
+                <div class="form-row">
+                    <div class="form-group col-lg-12">
+                        <label for="proyecto">Nombre del proyecto</label>
+                        <input name="nombreProyecto" type="text" class="form-control" id="proyecto" required>
+                    </div>
+                </div>
                 <div class="form-row ">
                     <div class="form-group col-lg-6 ">
                         <label for="inputEmail4">Email</label>
@@ -45,10 +51,11 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col-lg-12">
-                        <label for="proyecto">Nombre del proyecto</label>
-                        <input name="nombreProyecto" type="text" class="form-control" id="proyecto" required>
+                        <label>Nombre del Maestro Asignado</label>
+                        <input name="nombreMaestro" type="text" class="form-control"  required>
                     </div>
                 </div>
+            
             </div>
 
 
