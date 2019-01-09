@@ -57,7 +57,7 @@
                             <%= element.id_proyecto %>
                         </td>
                         <td width="23%">
-                            <%= element.nombre_proyecto %>
+                            <a class="trigger_popup_fricc3" id="agregarRevisor"> <%= element.nombre_proyecto %> </a>
                         </td>
                         <td width="25%">
                             <% if(integrantes){ %>
@@ -381,6 +381,12 @@
                 });
 
 
+                $(".trigger_popup_fricc3").click(function () {
+                    $('.hover_bkgr_fricc2').show();
+                    evaluacionRevisor($(this).closest('tr').find('td.id_p').text(), '-1');
+                });
+
+
                 $('.popupCloseButton').click(function () {
                     $('.hover_bkgr_fricc').hide();
                     $('.hover_bkgr_fricc2').hide();
@@ -405,17 +411,23 @@
                     $('#respuesta8').text(respuesta[7].respuesta);
                     $('#respuesta9').text(respuesta[8].respuesta);
 
-                    $('#calificacion1').text('CALIFICACION:  ' + calificacion[0].calificacion);
-                    $('#calificacion2').text('CALIFICACION:  ' + calificacion[1].calificacion);
-                    $('#calificacion3').text('CALIFICACION:  ' + calificacion[2].calificacion);
-                    $('#calificacion4').text('CALIFICACION:  ' + calificacion[3].calificacion);
-                    $('#calificacion5').text('CALIFICACION:  ' + calificacion[4].calificacion);
-                    $('#calificacion6').text('CALIFICACION:  ' + calificacion[5].calificacion);
-                    $('#calificacion7').text('CALIFICACION:  ' + calificacion[6].calificacion);
-                    $('#calificacion8').text('CALIFICACION:  ' + calificacion[7].calificacion);
-                    $('#calificacion9').text('CALIFICACION:  ' + calificacion[8].calificacion);
+                    if(calificacion){
+                        $('#calificacion1').text('CALIFICACION:  ' + calificacion[0].calificacion);
+                        $('#calificacion2').text('CALIFICACION:  ' + calificacion[1].calificacion);
+                        $('#calificacion3').text('CALIFICACION:  ' + calificacion[2].calificacion);
+                        $('#calificacion4').text('CALIFICACION:  ' + calificacion[3].calificacion);
+                        $('#calificacion5').text('CALIFICACION:  ' + calificacion[4].calificacion);
+                        $('#calificacion6').text('CALIFICACION:  ' + calificacion[5].calificacion);
+                        $('#calificacion7').text('CALIFICACION:  ' + calificacion[6].calificacion);
+                        $('#calificacion8').text('CALIFICACION:  ' + calificacion[7].calificacion);
+                        $('#calificacion9').text('CALIFICACION:  ' + calificacion[8].calificacion);
+                    }
+                   
+                    if(data.retro[0].retro){
+                        $('#retro').text(data.retro[0].retro);
+                    }
                     
-                    $('#retro').text(data.retro[0].retro);
+                    
 
                 }); 
             }
