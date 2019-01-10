@@ -1,5 +1,5 @@
-CREATE DATABASE improde;
-USE improde
+CREATE DATABASE improde_2019;
+USE improde_2019
 
 CREATE TABLE alumnos (
 	matricula BIGINT NOT NULL,
@@ -18,11 +18,11 @@ CREATE TABLE proyecto (
 	PRIMARY KEY (id_proyecto)
 );
 
-CREATE TABLE pregunta (
+/*CREATE TABLE pregunta (
 	id_pregunta int NOT NULL , 
 	pregunta text NOT NULL ,
 	PRIMARY KEY (id_pregunta)
-);
+);*/
 
 
 CREATE TABLE equipo (
@@ -45,12 +45,11 @@ CREATE TABLE respuesta_proyecto (
 	id_proyecto BIGINT NOT NULL, 
 	id_pregunta int NOT NULL ,
 	respuesta text NOT NULL,
-	FOREIGN KEY (id_proyecto) REFERENCES proyecto(id_proyecto),
-	FOREIGN KEY (id_pregunta) REFERENCES pregunta(id_pregunta)
+	FOREIGN KEY (id_proyecto) REFERENCES proyecto(id_proyecto)
 );
 
 
-INSERT INTO pregunta VALUES
+/*INSERT INTO pregunta VALUES
 	(1, 'Modelo de Impacto Qué tipo de impacto quieres tener como empresa/organización (impacto social, impacto personal, impacto local, impacto en una comunidad, impacto ambiental, etc.)? ¿Cómo mides tu impacto?'),
 	(2, 'Propuesta de valor ¿Qué hace única la propuesta de tu organización? ¿Quién más está en el espacio que te interesa, y por qué eres mejor?'),
 	(3, 'Aliados ¿Con quién trabajas para crear impacto positivo para tu negocio o para el contexto en general? ¿Con quién no trabajarías? ¿Quiénes son tus clientes, fundadores y red de contactos?'),
@@ -59,7 +58,7 @@ INSERT INTO pregunta VALUES
 	(6, 'Modelo de ventas ¿Cómo se financia tu trabajo? ¿Cómo se puede financiarse creativamente?'),
 	(7, '¿Te consideras un emprendedor? ¿Por qué?'),
 	(8, '¿Qué mensaje le darías al cliente para promover el servicio que propones?'),
-	(9, 'Te invitamos a que presentes tu proyecto y tu equipo en un video de no más de 2 minutos (puedes subirlo a cualquier plataforma de videos como youtube y poner el link en el espacio de texto, por ejemplo: https://www.youtube.com/watch?v=klVWGHtRTuE )');
+	(9, 'Te invitamos a que presentes tu proyecto y tu equipo en un video de no más de 2 minutos (puedes subirlo a cualquier plataforma de videos como youtube y poner el link en el espacio de texto, por ejemplo: https://www.youtube.com/watch?v=klVWGHtRTuE )');*/
 
 
 CREATE TABLE cuentas_revisores (
@@ -97,8 +96,7 @@ CREATE TABLE evaluacion_proyectos (
 	id_pregunta INT NOT NULL,
 	calificacion INT NOT NULL,
 	FOREIGN KEY (id_revisor) REFERENCES cuentas_revisores(id_revisor),
-	FOREIGN KEY (id_proyecto) REFERENCES proyecto(id_proyecto),
-	FOREIGN KEY (id_pregunta) REFERENCES pregunta(id_pregunta)
+	FOREIGN KEY (id_proyecto) REFERENCES proyecto(id_proyecto)
 );
 
 CREATE TABLE retroalimentacion (

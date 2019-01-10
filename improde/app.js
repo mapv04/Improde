@@ -14,7 +14,7 @@ let con = mysql.createConnection({
     user: 'root',
     port: '3306',
     password: 'car1118',
-    database: 'improde_production_backup'
+    database: 'improde_2019'
 });
 con.connect(err => {
     if (err) console.log(err);
@@ -194,7 +194,8 @@ app.get('/', authenticationMiddleware(), (req, res) => {
                 respuesta6: result[5].respuesta,
                 respuesta7: result[6].respuesta,
                 respuesta8: result[7].respuesta,
-                respuesta9: result[8].respuesta
+                respuesta9: result[8].respuesta,
+                respuesta10: result[9].respuesta
             });
         }); 
     } else {
@@ -410,7 +411,8 @@ app.get('/misdatos', authenticationMiddleware(), (req, res) => {
             [lastInsertID, 6, ''],
             [lastInsertID, 7, ''],
             [lastInsertID, 8, ''],
-            [lastInsertID, 9, '']
+            [lastInsertID, 9, ''],
+            [lastInsertID, 10, '']
         ];
         con.query(sqlRespuesta, [respuesta], (err, result) => {
             if (err) {
@@ -446,7 +448,8 @@ app.post('/postulacion', authenticationMiddleware(), (req, res) => {
         req.body.respuesta6,
         req.body.respuesta7,
         req.body.respuesta8,
-        req.body.respuesta9
+        req.body.respuesta9,
+        req.body.respuesta10
     ];
     for (let i = 0; i < arrayRespuestas.length; i++) {
         con.query('UPDATE respuesta_proyecto SET respuesta = ? WHERE id_pregunta = ? AND id_proyecto = ?',
