@@ -13,7 +13,7 @@ let con = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     port: '3306',
-    password: 'car1118',
+    password: 'Lic080497',
     database: 'improde_2019'
 });
 con.connect(err => {
@@ -146,7 +146,7 @@ app.get('/', authenticationMiddleware(), (req, res) => {
                             (SELECT ROUND(AVG(calificacion) * 20,2) FROM evaluacion_proyectos WHERE id_proyecto = p.id_proyecto)  AS calificacion
                             FROM proyecto p WHERE correo <> 'admin@improde.com' ORDER BY calificacion DESC`;
 
-    let sqlRevisorProyecto = `SELECT cr.id_revisor, cr.nombre_revisor, ar.id_proyecto, p.nombre_proyecto ,ar.evaluacion_completada FROM cuentas_revisores cr 
+    let sqlRevisorProyecto = `SELECT cr.id_revisor, cr.nombre_revisor, cr.telefono_oficina, ar.id_proyecto, p.nombre_proyecto ,ar.evaluacion_completada FROM cuentas_revisores cr 
                             INNER JOIN asignacion_revisores ar ON cr.id_revisor = ar.id_revisor inner join proyecto p 
                             ON ar.id_proyecto = p.id_proyecto where cr.id_revisor = ?`;
 
@@ -176,7 +176,12 @@ app.get('/', authenticationMiddleware(), (req, res) => {
                 console.log(err);
                 return;
             }
-            res.render('Proyectos.ejs', {proyectos: result});
+            if(result[0].telefono_oficina !== null){
+                res.render('Proyectos.ejs', {proyectos: result});
+            }
+            else{
+                res.render('AltaDatosRevisor.ejs',{datos: result});
+            }
 
         });
     } else if (nivelUsuario === 2) {
@@ -276,6 +281,53 @@ app.get('/misdatos', authenticationMiddleware(), (req, res) => {
         res.render('DatosPersonales.ejs', { alumnos: alumnos })
     });
 
+});
+
+app.get('/misdatosRevisor', authenticationMiddleware(), (req,res) => {
+    if(req.session.passport.user.nivel_usuario!==1){
+        res.redirect('/');
+        return;
+    }
+    let idRevisor = req.session.passport.user.id_proyecto;
+    let sqlDatos = `SELECT nombre_revisor, telefono_oficina, telefono_celular, sexo, DATE_FORMAT(fecha_nacimiento,'%d/%m/%Y') AS fecha_nacimiento, 
+                    curriculum, facebook FROM cuentas_revisores WHERE id_revisor = ? ;`;
+    let sqlTemas = 'SELECT * FROM temas_revisor WHERE id_revisor = ? ;';
+    let sqlComentarios = 'SELECT comentario FROM comentarios_revisores WHERE id_revisor = ? ;';
+
+    con.query(sqlDatos,[idRevisor], (err, result) => {
+        if(err) console.log(err);
+        con.query(sqlTemas, [idRevisor], (err, result2) => {
+            if(err) console.log(err);
+            con.query(sqlComentarios,[idRevisor], (err, result3) => {
+                if(err) console.log(err);
+                res.render('DatosPersonalesRevisor.ejs', {datos: result, temas: result2, comentarios: result3});
+            });
+        });
+    });
+
+});
+
+app.post('/actualizarDatos', authenticationMiddleware(), (req,res) => {
+    if(req.session.passport.user.nivel_usuario!==1){
+        res.redirect('/');
+        return;
+    }
+    let idRevisor = req.session.passport.user.id_proyecto;
+    let curriculum =  req.body.curriculum;
+    let facebook = req.body.facebook;
+    let sqlActualizarC = 'UPDATE cuentas_revisores SET curriculum = ?  WHERE id_revisor = ? ;';
+    let sqlActualizarF = 'UPDATE cuentas_revisores SET facebook = ? WHERE id_revisor = ? ;';
+    if(curriculum.length !== 0){
+        con.query(sqlActualizarC,[curriculum, idRevisor], (err, result) => {
+         if(err) console.log(err);
+        });
+    }
+    if(facebook.length !== 0){
+        con.query(sqlActualizarF, [facebook, idRevisor], (err, result) => {
+            if(err) console.log(err);
+        });
+    }
+    res.redirect('/');
 });
 
 ////////////////////////////////////////////////
@@ -571,6 +623,55 @@ app.post('/calificar/:idProyecto', authenticationMiddleware(), (req, res) => {
 
 });
 
+app.post('/altaDatos', authenticationMiddleware(), (req, res) => {
+    if(req.session.passport.user.nivel_usuario!==1){
+        res.redirect('/');
+        return;
+    }
+    let telOficina = req.body.telefono_oficina;
+    let telCelular = req.body.telefono_celular;
+    let sexo = req.body.sexo;
+    let fecha = req.body.fecha_nacimiento;
+    let curriculum = req.body.curriculum;
+    let facebook = req.body.facebook;
+    let idRevisor = req.session.passport.user.id_proyecto;
+    let arrayTemas = req.body.temas;
+    let comentarios = req.body.comentarios;
+
+    let sqlRevisorProyecto = `SELECT cr.id_revisor, cr.nombre_revisor, cr.telefono_oficina, ar.id_proyecto, p.nombre_proyecto, 
+                            ar.evaluacion_completada, com.comentario FROM cuentas_revisores cr 
+                            INNER JOIN asignacion_revisores ar ON cr.id_revisor = ar.id_revisor inner join proyecto p 
+                            ON ar.id_proyecto = p.id_proyecto INNER JOIN comentarios_revisores com ON cr.id_revisor = com.id_revisor where cr.id_revisor = ?`;
+    let sqlAltaDatos = `UPDATE cuentas_revisores SET telefono_oficina = ?, telefono_celular = ?, sexo = ?, fecha_nacimiento = ?, curriculum = ?, facebook = ?
+                        WHERE id_revisor = ?;`;
+    let sqlTemas = 'INSERT INTO temas_revisor (id_revisor, tema) VALUES(?,?);';
+    let sqlComentarios = 'INSERT INTO comentarios_revisores (id_revisor, comentario) VALUES (?,?);';
+
+    con.query(sqlAltaDatos,[telOficina,telCelular,sexo,fecha,curriculum, facebook, req.session.passport.user.id_proyecto], (err,res) => {
+        if(err) console.log(err);
+    });
+
+    for (let i = 0; i < arrayTemas.length-1; i++) {
+        con.query(sqlTemas,
+            [idRevisor, arrayTemas[i]], (err, results) => {
+                if (err) console.log(err);
+            });
+    }
+
+    con.query(sqlComentarios, [idRevisor, comentarios],(err, result) =>{
+        if(err) console.log(err);
+        
+    });
+
+    con.query(sqlRevisorProyecto, req.session.passport.user.id_proyecto,(err, result) => {
+        if (err){
+            console.log(err);
+            return;
+        }
+        res.render('Proyectos.ejs', {proyectos: result});
+    });
+
+});
 
 app.post('/login', passport.authenticate('local',
     {

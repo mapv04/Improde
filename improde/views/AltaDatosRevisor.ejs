@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <link rel="stylesheet" href="/stylesheet/bootstrap.css">
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="/stylesheet/dashboard.css">
+    </head>
+    <body>
+        <div class="wrapper">
+              <nav id="sidebar">
+            <div class="sidebar-header">
+                <img src="/improde/public/img/univaLogo.png" alt="" class="univa-logo">
+                <h3>IMPRODE</h3>
+            </div>
+            <ul class="list-unstyled components">
+                <li>
+                    <a>Proyectos</a>
+                </li>
+                <li class="active">
+                    <a href="#">Datos Personales</a>
+                </li>
+            </ul>
+        </nav>
+
+            <div id="main">
+                <button type="button" id="sidebarCollapse" class="btn btn-light">
+                    <img src="/improde/public/img/univaLogo.png" alt="" class="univa-logo"> MENU
+                </button>
+                <span id="logout"><a href="/logout">Cerrar Sesión</a></span>
+                <br> <br> <br>
+
+                <div class="titulo-datos">Datos Personales</div>
+                 <br>
+                 <form action="/altaDatos" method="POST" onsubmit="validate(event, this)">
+                     <table class="table" id="tabla-postulacion">
+                        <tbody>
+                            <tr class="thead-light">
+                                <th scope="row" colspan="2">
+                                    Nombre <br>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <label for="" class="form-control" name="nombre"><%= datos[0].nombre_revisor%></label>
+                                </td>
+                            </tr>
+                            
+                            <tr class="thead-light">
+                                <th scope="row" colspan="2">
+                                    Teléfono de oficina* <br>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <input type="text" class="form-control" name="telefono_oficina" required>
+                                </td>
+                            </tr>
+                            <tr class="thead-light">
+                                <th scope="row" colspan="2">
+                                    Teléfono celular* <br>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <input type="text" class="form-control" name="telefono_celular" required>
+                                </td>
+                            </tr>
+                            <tr class="thead-light">
+                                <th scope="row" colspan="2">
+                                    Sexo* <br>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    Masculino  <input type="radio" name ="sexo" value="Masculino" style="margin-right: 100px;" required>
+                                    Femenino   <input type="radio" name ="sexo" value="Femenino" style="margin-right: 100px;" required>
+                                </td>
+                            </tr>
+                            <tr class="thead-light">
+                                <th scope="row" colspan="2">
+                                    Fecha de nacimiento* <br>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <input type="date" min="1905-01-01" max="2018-01-01" name="fecha_nacimiento" required>
+                                </td>
+                            </tr>
+                            <tr class="thead-light">
+                                <th scope="row" colspan="2">
+                                    Link con curriculum <br>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <input type="text" class="form-control" name="curriculum" >
+                                </td>
+                            </tr>
+                            <tr class="thead-light">
+                               <th scope="row" colspan="2">
+                                Perfil de LinkedIn o Facebook<br>
+                                </th>
+                            </tr>
+                            <tr>
+                               <td scope="row">
+                                <input type="text" class="form-control" name="facebook" > 
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table" id="tabla-postulacion">
+                        <tbody>
+                            <tr class="thead-light" >
+                                        <th scope="row" colspan="1">
+                                            Temas*       
+                                        </th>
+                                        <th scope="row" colspan="1">
+                                            Temas Técnicos*
+                                        </th>
+                            </tr>
+                                    <tr>
+                                        <td scope="row">
+                                            <input type="checkbox" name ="temas" value="Legal y gobierno corporativo" style="margin:10px" > Legal y gobierno corporativo <br>
+                                            <input type="checkbox" name ="temas" value="Finanzas" style="margin:10px;" > Finanzas <br>
+                                            <input type="checkbox" name ="temas" value="Comercializacion" style="margin: 10px;" > Comercialización <br>
+                                            <input type="checkbox" name ="temas" value="Operacion" style="margin: 10px;" > Operación <br>
+                                            <input type="checkbox" name ="temas" value="Perfil emprendedor" style="margin: 10px;" >  Perfil emprendedor <br>
+                                            <input type="checkbox" name ="temas" value="Platicas interactivas" style="margin: 10px;" > Pláticas interactivas <br>
+                                            <input type="checkbox" name ="temas" value="Consultor integral" style="margin: 10px;" > Consultor integral <br>
+                                            <input type="checkbox" name ="temas" value="Administracion" style="margin: 10px;" > Administración <br>
+                                            <input type="checkbox" name ="temas" value="Validacion y prototipado" style="margin: 10px;" > Validación y prototipado <br>
+                                            <input type="checkbox" name ="temas" value="Creacion de startups de impacto social" style="margin: 10px;" > Creación de startups de impacto social <br>
+                                            <input type="checkbox" name ="temas" value="Economia" style="margin: 10px;" > Economía <br>
+                                            <input type="checkbox" name ="temas" value="Medio ambiente" style="margin: 10px;" > Medio ambiente <br>
+                                            <input type="checkbox" name ="temas" value="Energias renovables" style="margin: 10px;" > Energías renovables <br>
+                                            <input type="checkbox" name ="temas" value="Smart cities" style="margin: 10px;" > Smart cities <br>
+                                            <input type="checkbox" name ="temas" value="Movilidad" style="margin: 10px;" > Movilidad <br>
+                                            
+                                        </td>
+                                        <td scope="row">
+                                            <a class="trigger_popup_fricc" id="software" style="margin:10px; cursor: pointer;"><span class="popupCloseButton" style="cursor: pointer;">></span> Software </a> <br>
+                                            <!-- Popup de software -->
+                                            <div class="hover_bkgr_fricc">
+                                                    <span class="helper"></span>
+                                                    <div>
+                                                        <table class="table" id="tabla-software">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td scope="row" colspan="2">
+                                                                        <input type="checkbox" name ="temas" value="Lenguajes de programacion" style="margin:10px" > Lenguajes de programación <br>
+                                                                        <input type="checkbox" name ="temas" value="BD" style="margin:10px;" > BD <br>
+                                                                        <input type="checkbox" name ="temas" value="Mobile" style="margin: 10px;" > Mobile <br>
+                                                                        <input type="checkbox" name ="temas" value="Web" style="margin: 10px;" > Web <br>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                        
+                                                        </table>
+                                                    </div>
+                                        
+                                                </div>
+                                                <a class="trigger_popup_fricc2" id="software" style="margin:10px; cursor: pointer;"><span class="popupCloseButton2" style="cursor: pointer;">></span> Electrónica </a>  <br>
+                                            <!-- Popup de electronica -->
+                                            <div class="hover_bkgr_fricc2">
+                                                    <span class="helper"></span>
+                                                    <div>
+                                                        <table class="table" id="tabla-software">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td scope="row" colspan="2">
+                                                                        <input type="checkbox" name ="temas" value="Microcontroladores" style="margin: 10px;" > Microcontroladores <br>
+                                                                        <input type="checkbox" name ="temas" value="Sensores e instrumentación" style="margin: 10px;" >Sensores e instrumentación  <br>
+                                                                        <input type="checkbox" name ="temas" value="Diseno de circuitos digitales" style="margin: 10px;" > Diseño de circuitos digitales <br>
+                                                                        <input type="checkbox" name ="temas" value="Robotica" style="margin: 10px;" > Robótica  <br>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                        
+                                                        </table>
+                                                    </div>
+                                        
+                                                </div>
+
+                                            <input type="checkbox" name ="temas" value="IoT" style="margin: 10px;" >  IoT <br>
+                                            <input type="checkbox" name ="temas" value="IA" style="margin: 10px;" > IA <br>
+                                            <input type="checkbox" name ="temas" value="Ciencia de datos" style="margin: 10px;" > Ciencia de datos <br>
+                                            <input type="checkbox" name ="temas" value="Blockchain" style="margin: 10px;" > Blockchain <br>
+                                            <input type="checkbox" name ="temas" value="Biomedicina" style="margin: 10px;" > Biomedicina <br>
+                                            <input type="checkbox" name ="temas" value="Diseno asistido por computadora" style="margin: 10px;" > Diseño asistido por computadora <br>
+                                            <input type="checkbox" name ="temas" value="Nanotecnologia" style="margin: 10px;" > Nanotecnología <br>
+                                            <input type="checkbox" name ="temas" value="Fintech" style="margin: 10px;" > Fintech <br>
+                                            <input type="checkbox" name= "temas" value=" " style="visibility: hidden;" style="margin: 10px" checked>
+                                            </td>
+                                        
+                                    </tr>
+                                    <tr class="thead-light" >
+                                        <th scope="row" colspan="2">
+                                            Comentarios Generales*       
+                                        </th>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">
+                                        
+                                            <textarea name="comentarios" class="form-control" rows="6" cols="10" placeholder="Comentarios Generales" required></textarea>
+                                            
+                                        </td>
+                                    </tr>
+                        </tbody>
+                     </table>
+                     <button class="btn btn-primary btn-lg" id="boton-guardar">Guardar</button>
+                
+
+
+                 </form>
+            
+        
+    </div>
+
+                <!-- jQuery CDN - Slim version (=without AJAX) -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+        <!-- Popper.JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+            crossorigin="anonymous"></script>
+        <!-- Bootstrap JS -->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+            crossorigin="anonymous"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#sidebarCollapse').on('click', function () {
+                    $('#sidebar').toggleClass('active');
+                });
+            });
+        </script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var activo1 = false;
+        var activo2 = false;
+
+        $('.hover_bkgr_fricc').hide();
+        $('.hover_bkgr_fricc2').hide();
+
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
+        });
+
+        $(".trigger_popup_fricc").click(function () {
+            if(activo1 === false){
+              $('.hover_bkgr_fricc').show();
+              activo1 = true;
+            }
+            else{
+                $('.hover_bkgr_fricc').hide();
+                activo1 = false;
+            }
+
+        });
+
+        $(".trigger_popup_fricc2").click(function () {
+            if(activo2 === false){
+              $('.hover_bkgr_fricc2').show();
+              activo2 = true;
+            }
+            else{
+                $('.hover_bkgr_fricc2').hide();
+                activo2 = false;
+            }
+
+        });
+
+
+
+    });
+</script>
+
+        <script>
+            function validate(e){
+                var formulario = document.forms[0];
+                var check = false;
+                for(var i=0; i<formulario.temas.length-1; i++){//revisar si no cuenta el checkbox que esta oculto 
+                    if(formulario.temas[i].checked){
+                        check = true;
+                    }
+                }
+                if(!check){
+                    alert("Debe seleccionar al menos un tema");
+                    if(e.preventDefault){
+                        e.preventDefault();
+                    }
+                    else{
+                        e.returnValue = false;
+                    }
+                }
+            }
+        </script>
+        </div>
+    </body>
+    
+</html>

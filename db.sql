@@ -68,15 +68,14 @@ CREATE TABLE cuentas_revisores (
 	nombre_revisor text NOT NULL,
 	nivel_usuario_revisor int DEFAULT 1,
     /*
-    apellido text NOT NULL,
     telefono_oficina text NOT NULL,
     telefono_celular text NOT NULL,
-    sexo text NOT NULL,
-    nacimiento date NOT NULL,
+    sexo nvarchar(15) NOT NULL,
+    fecha_nacimiento date DEFAULT '1000-01-01' NOT NULL,
     curriculum text NOT NULL,
     facebook text NOT NULL,
-    ***(En otra tabla)*** temas text NOT NULL,
-    */
+    (En otra tabla) temas text NOT NULL,*/
+    
 	PRIMARY KEY (id_revisor)
 );
 
@@ -113,11 +112,34 @@ nombre_profesor text NOT NULL,
 FOREIGN KEY  (id_proyecto) REFERENCES proyecto(id_proyecto)
 );
 
+
+CREATE TABLE temas_revisor (
+	id_revisor BIGINT NOT NULL,
+	tema TEXT NOT NULL,
+	FOREIGN KEY (id_revisor) REFERENCES cuentas_revisores(id_revisor)
+);
+
+
+CREATE TABLE comentarios_revisores (
+id_revisor BIGINT NOT NULL,
+comentario TEXT NOT NULL,
+FOREIGN KEY (id_revisor) REFERENCES cuentas_revisores(id_revisor)
+
+);
+
+
 ALTER TABLE proyecto add nivel_usuario int DEFAULT 2 ;
 ALTER TABLE asignacion_revisores ADD evaluacion_completada int DEFAULT 0;
 INSERT INTO proyecto VALUES (0,'admin','admin@improde.com','.6jNJ]Qfxc9.LNy`',0);
 
 
+
+ALTER TABLE cuentas_revisores add telefono_oficina TEXT;
+ALTER TABLE cuentas_revisores add telefono_celular TEXT ;
+ALTER TABLE cuentas_revisores add sexo NVARCHAR(15) ;
+ALTER TABLE cuentas_revisores add fecha_nacimiento DATE default '1000-01-01' NOT NULL;
+ALTER TABLE cuentas_revisores add curriculum TEXT ;
+ALTER TABLE cuentas_revisores add facebook TEXT;
 
 
 

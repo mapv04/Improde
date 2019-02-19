@@ -2,9 +2,9 @@
 <html>
     <head>
      <title>IMPRODE MIS DATOS</title>
-        <link rel="stylesheet" href="/improde/public/stylesheet/bootstrap.css">
+        <link rel="stylesheet" href="/stylesheet/bootstrap.css">
     <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="/improde/public/stylesheet/dashboard.css">
+    <link rel="stylesheet" href="/stylesheet/dashboard.css">
     </head>
     <body>
         <div class="wrapper">
@@ -15,10 +15,10 @@
             </div>
             <ul class="list-unstyled components">
                 <li>
-                    <a>Proyectos</a>
+                    <a href="/misdatos">Proyectos</a>
                 </li>
                 <li class="active">
-                    <a href="#">Datos Personales</a>
+                    <a>Datos Personales</a>
                 </li>
             </ul>
         </nav>
@@ -34,7 +34,7 @@
 
             <div class="titulo-datos"></div>
 
-            
+            <form action="/actualizarDatos" method="POST">
              <table class="table" id="tabla-postulacion">
                         <tbody>
                             <tr class="thead-light">
@@ -44,20 +44,10 @@
                             </tr>
                             <tr>
                                 <td scope="row">
-                                    nombre
+                                    <%= datos[0].nombre_revisor %>
                                 </td>
                             </tr>
                             
-                            <tr class="thead-light">
-                                <th scope="row" colspan="2">
-                                    Apellidos <br>
-                                </th>
-                            </tr>
-                            <tr scope="row">
-                                <td scope="row" >
-                                    apellidos
-                                </td>
-                            </tr>
                             <tr class="thead-light">
                                 <th scope="row" colspan="2">
                                     Teléfono de oficina <br>
@@ -65,7 +55,7 @@
                             </tr>
                             <tr>
                                 <td scope="row">
-                                    telefono oficina
+                                    <%= datos[0].telefono_oficina %>
                                 </td>
                             </tr>
                             <tr class="thead-light">
@@ -75,7 +65,7 @@
                             </tr>
                             <tr>
                                 <td scope="row">
-                                    telefono celular
+                                    <%= datos[0].telefono_celular %>
                                 </td>
                             </tr>
                             <tr class="thead-light">
@@ -85,7 +75,7 @@
                             </tr>
                             <tr>
                                 <td scope="row">
-                                   sexo
+                                   <%= datos[0].sexo %>
                                 </td>
                             </tr>
                             <tr class="thead-light">
@@ -95,7 +85,8 @@
                             </tr>
                             <tr>
                                 <td scope="row">
-                                    fecha de nacimiento
+                                    <%= datos[0
+                                    ].fecha_nacimiento %>
                                 </td>
                             </tr>
                             <tr class="thead-light">
@@ -105,17 +96,17 @@
                             </tr>
                             <tr>
                                 <td scope="row">
-                                    link del curriculum
+                                    <label><%= datos[0].curriculum %><input type="text" class="form-control" name="curriculum" style="width: 500px"></label>
                                 </td>
                             </tr>
                              <tr class="thead-light">
                                 <th scope="row" colspan="2">
-                                    Perfil de Facebook <br>
+                                    Perfil de LinkedIn o Facebook <br>
                                 </th>
                             </tr>
                             <tr>
                                 <td scope="row">
-                                    facebook
+                                    <label><%= datos[0].facebook %><input type="text" class="form-control" name="facebook" style="width: 500px"></label>
                                 </td>
                             </tr>
                              <tr class="thead-light">
@@ -123,14 +114,31 @@
                                     Temas <br>
                                 </th>
                             </tr>
+                                <% if(temas){%>
+                                     <% temas.forEach((element) => { %>
+                                     <tr>
+                                          <td>
+                                             <%= element.tema %>
+                                         </td>
+                                     </tr>
+                                 <% }); } %>
+
+                            <tr class="thead-light">
+                                <th scope="row" colspan="2">
+                                    Comentarios
+                                </th>
+                            </tr>
                             <tr>
                                 <td scope="row">
-                                    temas
+                                    <textarea rows="6" class="form-control" disabled><%= comentarios[0].comentario %></textarea>
                                 </td>
                             </tr>
+                
                             
                         </tbody>
                      </table>
+                     <button class="btn btn-primary btn-lg" id="boton-guardar">Guardar</button>
+                     </form>
         </div>
 
         <!-- jQuery CDN - Slim version (=without AJAX) -->
