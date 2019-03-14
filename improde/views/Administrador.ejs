@@ -38,6 +38,7 @@
             <!--          <div style="width: 80%; font-size: 16px; text-align: left; margin-left: 150px;">
                  Busqueda por nombre proyecto 
                 <input type="text" id="busqueda"></div> -->
+                <a class="trigger_popup_fricc4" style="margin-right: 76%" ><button type="button" class="btn">Nuevo revisor</button></a>
             <table class="table" id="tabla-postulacion">
                 <thead class="thead-dark">
                     <tr>
@@ -88,7 +89,9 @@
                             <% } %>
                             <% }); %>
                             <% if(!revisorAsignado){ %>
-                            <a class="trigger_popup_fricc" id="agregarRevisor">Agregar revisor</a>
+                            <a class="trigger_popup_fricc" id="agregarRevisor">Agregar revisor</a> 
+                            <br>
+                            <a class="trigger_popup_fricc5" id="agregarRevisor">Agregar revisor por ID</a>
                             <%} %>
                             <%} %>
                         </td>
@@ -359,6 +362,63 @@
                     </form>
                 </div>
             </div>
+
+
+
+
+                <div class="hover_bkgr_fricc4">
+                        <span class="helper"></span>
+                        <div>
+                            <div class="popupCloseButton">X</div>
+                            <form action="/agregarNuevoRevisor" method="POST">
+                                <br>
+                                REVISOR
+                                <br>
+                                <div class="form-group col-lg-12 form-row">
+                                    <label for="nombreRevisor">Nombre del revisor</label>
+                                    <input name="nombreRevisor" type="text" class="form-control" required>
+                                </div>
+                                <div class="form-group col-lg-12 form-row">
+                                    <label for="email">Email</label>
+                                    <input name="email" type="email" class="form-control" required>
+                                </div>
+                                <div class="form-group col-lg-12 form-row">
+                                    <label for="password">Password</label>
+                                    <input name="password" type="text" class="form-control" required>
+                                </div>
+        
+                                <button class="btn  btn-primary btn-lg">Agregar Revisor</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="hover_bkgr_fricc5">
+                        <span class="helper"></span>
+                        <div>
+                            <div class="popupCloseButton">X</div>
+                            <form action="/asignarRevisoresID" method="POST">
+                                <br>
+                                ASIGNAR REVISORES POR ID
+                                <br>
+                                <input type="hidden" id="id_proyecto" name="idProyecto" required>
+                                <div class="form-group col-lg-12 form-row">
+                                    <label for="idRevisor">ID #1</label>
+                                    <input name="idRevisor" type="number" min="0" class="form-control" required>
+                                </div>
+                                <div class="form-group col-lg-12 form-row">
+                                    <label for="idRevisor2">ID #2</label>
+                                    <input name="idRevisor2" type="number" min="0" class="form-control" required>
+                                </div>
+                                <div class="form-group col-lg-12 form-row">
+                                    <label for="idRevisor3">ID #3</label>
+                                    <input name="idRevisor3" type="number" min="0" class="form-control" required>
+                                </div>
+        
+                                <button class="btn  btn-primary btn-lg">Asignar Revisores</button>
+                            </form>
+                        </div>
+                    </div>
+
         </div>
 
         <!-- jQuery CDN - Slim version (=without AJAX) -->
@@ -393,10 +453,22 @@
                     evaluacionRevisor($(this).closest('tr').find('td.id_p').text(), '-1');
                 });
 
+                $(".trigger_popup_fricc4").click(function () {
+                    $('.hover_bkgr_fricc4').show();
+                    
+                });
+
+                $(".trigger_popup_fricc5").click(function () {
+                    $('.hover_bkgr_fricc5').show();
+                    $('#id_proyecto').val($(this).closest('tr').find('td.id_p').text());
+                });
+
 
                 $('.popupCloseButton').click(function () {
                     $('.hover_bkgr_fricc').hide();
                     $('.hover_bkgr_fricc2').hide();
+                    $('.hover_bkgr_fricc4').hide();
+                    $('.hover_bkgr_fricc5').hide();
                 });
 
 

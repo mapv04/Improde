@@ -149,6 +149,7 @@ app.get('/', authenticationMiddleware(), (req, res) => {
     let sqlRevisorProyecto = `SELECT cr.id_revisor, cr.nombre_revisor, cr.telefono_oficina, ar.id_proyecto, p.nombre_proyecto ,ar.evaluacion_completada FROM cuentas_revisores cr 
                             INNER JOIN asignacion_revisores ar ON cr.id_revisor = ar.id_revisor inner join proyecto p 
                             ON ar.id_proyecto = p.id_proyecto where cr.id_revisor = ?`;
+    let sqlNombreRevisor = 'SELECT nombre_revisor FROM cuentas_revisores where id_revisor = ?';
 
     if (nivelUsuario === 0) {
         con.query(sqlAdminProyecto, (err, result1) => {
@@ -176,7 +177,16 @@ app.get('/', authenticationMiddleware(), (req, res) => {
                 console.log(err);
                 return;
             }
-            if(result[0].telefono_oficina !== null){
+            if(!result[0]){
+                con.query(sqlNombreRevisor, req.session.passport.user.id_proyecto,(err, result) => {
+                    if (err){
+                        console.log(err);
+                        return;
+                    }
+                    res.render('AltaDatosRevisor.ejs',{datos: result});
+                });
+            }
+            else if(result[0].telefono_oficina !== null){
                 res.render('Proyectos.ejs', {proyectos: result});
             }
             else{
@@ -306,6 +316,57 @@ app.get('/misdatosRevisor', authenticationMiddleware(), (req,res) => {
     });
 
 });
+
+app.get('/adminInfoRevisores/:idRevisor', authenticationMiddleware(), (req, res) => {
+    if(req.session.passport.user.nivel_usuario!==0){
+        res.redirect('/');
+        return;
+    }
+    let idRevisor = req.params.idRevisor;
+    let sqlDatos = `SELECT nombre_revisor, telefono_oficina, telefono_celular, sexo, DATE_FORMAT(fecha_nacimiento,'%d/%m/%Y') AS fecha_nacimiento, 
+                    curriculum, facebook FROM cuentas_revisores WHERE id_revisor = ? ;`;
+    let sqlTemas = 'SELECT * FROM temas_revisor WHERE id_revisor = ? ;';
+    let sqlComentarios = 'SELECT comentario FROM comentarios_revisores WHERE id_revisor = ? ;';
+
+    con.query(sqlDatos,[idRevisor], (err, result) => {
+        if(err) console.log(err);
+        con.query(sqlTemas, [idRevisor], (err, result2) => {
+            if(err) console.log(err);
+            con.query(sqlComentarios,[idRevisor], (err, result3) => {
+                if(err) console.log(err); 
+                if(!result3[0]){
+                    result3[0] = "";
+                }
+                res.render('AdminInfoRevisores.ejs', {datos: result, temas: result2, comentarios: result3});
+            });
+        });
+    });
+
+});
+/*
+app.get('/adminInfoPersonal', authenticationMiddleware(), (req, res) => {
+    console.log("si entra a app.js");
+    if(req.session.passport.user.nivel_usuario!==0){
+        res.redirect('/');
+        return;
+    }
+    let idRevisor = req.query.idRevisor;
+    let sqlDatos = `SELECT nombre_revisor, telefono_oficina, telefono_celular, sexo, DATE_FORMAT(fecha_nacimiento,'%d/%m/%Y') AS fecha_nacimiento, 
+    curriculum, facebook FROM cuentas_revisores WHERE id_revisor = ? ;`;
+    let sqlTemas = 'SELECT * FROM temas_revisor WHERE id_revisor = ? ;';
+    let sqlComentarios = 'SELECT comentario FROM comentarios_revisores WHERE id_revisor = ? ;';
+    con.query(sqlDatos,[idRevisor], (err, result) => {
+        if(err) console.log(err);
+        con.query(sqlTemas, [idRevisor], (err, result2) => {
+            if(err) console.log(err);
+            con.query(sqlComentarios,[idRevisor], (err, result3) => {
+                if(err) console.log(err);
+                res.send( {datos: result, temas: result2, comentarios: result3});
+            });
+        });
+    });
+
+});*/
 
 app.post('/actualizarDatos', authenticationMiddleware(), (req,res) => {
     if(req.session.passport.user.nivel_usuario!==1){
@@ -582,6 +643,80 @@ app.post('/agregarRevisor', authenticationMiddleware(), (req, res) => {
         res.redirect('/');
     }
 });
+
+app.post('/asignarRevisoresID', authenticationMiddleware(), (req, res) => {
+    if(req.session.passport.user.nivel_usuario!==0){
+        res.redirect('/');
+        return;
+    }
+    let sqlAsignarPorID = "INSERT INTO asignacion_revisores (id_revisor, id_proyecto) VALUES(?)";
+    let sqlExisteID = "SELECT id_revisor FROM cuentas_revisores WHERE id_revisor = ?;";
+    let idProyecto = req.body.idProyecto.replace('IPD18-','').match(/\d+/g)[0];
+    let idRevisores = [req.body.idRevisor, req.body.idRevisor2, req.body.idRevisor3];
+    let registroFallo = false;
+
+    for(let i = 0; i<3;i++){
+        con.query(sqlExisteID, [[idRevisores[i]]], (err, result) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            if(!result[0]){
+                registroFallo = true;
+            }
+            if(i===2) asignar();
+        });
+    }
+
+    function asignar(){
+        if(!registroFallo){
+            for(let i=0;i<3;i++){
+                con.query(sqlAsignarPorID, [[idRevisores[i], idProyecto]], (err, result) => {
+                    if(err){
+                        console.log(err);
+                        return;
+                    }
+                });
+            }
+            res.redirect('/');
+        }
+        else{
+            res.render('AsignacionRevisorFallo.ejs');
+        }
+    }
+
+});
+
+app.post('/agregarNuevoRevisor', authenticationMiddleware(), (req, res) => {
+    if(req.session.passport.user.nivel_usuario!==0){
+        res.redirect('/');
+        return;
+    }
+    let sqlCheckRevisorEmail = 'SELECT id_revisor, nombre_revisor  FROM cuentas_revisores WHERE correo_revisor = ?'
+    let sqlAgregarRevisor = 'INSERT INTO cuentas_revisores(correo_revisor,contrasena_revisor,nombre_revisor) VALUES (?)';
+    let nombreRevisor = req.body.nombreRevisor;
+    let email = req.body.email.toLowerCase();
+    let password = req.body.password;
+
+    con.query(sqlCheckRevisorEmail, [email], (err, result) => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        if(result[0]){
+            res.redirect('/')
+        } else{
+            con.query(sqlAgregarRevisor, [[email,password,nombreRevisor]], (err, result3) => {
+                 if (err) {
+                    console.log(err);
+                    return;
+                }
+                    res.redirect('/');
+                });
+        }
+    });
+});
+
 
 
 app.post('/calificar/:idProyecto', authenticationMiddleware(), (req, res) => {

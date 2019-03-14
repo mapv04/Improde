@@ -51,8 +51,14 @@
                     <% if(cuentas){ %>
                         <% cuentas.forEach(element => {%>
                             <tr>
-                                <td> <%= element.id_revisor %></td>
-                                <td> <%= element.nombre_revisor %></td>
+                                <td>
+                                     <%= element.id_revisor %>
+                                    </td>
+                                <td> 
+                                        <form action="/adminInfoRevisores/<%= element.id_revisor %>" method="GET">
+                                            <button style="border: none; background: none;"><%= element.nombre_revisor%></button>
+                                        </form>
+                                </td>
                                 <td> <%= element.correo_revisor %></td>
                                 <td> <%= element.contrasena_revisor %></td>
                                 <% if(asignaciones){ %>

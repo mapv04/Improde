@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+    <head>
+     <title>IMPRODE MIS DATOS</title>
+        <link rel="stylesheet" href="/stylesheet/bootstrap.css">
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="/stylesheet/dashboard.css">
+    </head>
+    <body>
+        <div class="wrapper">
+              <nav id="sidebar">
+            <div class="sidebar-header">
+                <img src="/improde/public/img/univaLogo.png" alt="" class="univa-logo">
+                <h3>IMPRODE</h3>
+            </div>
+            <ul class="list-unstyled components">
+                    <li >
+                        <a href="/" > Proyectos </a>
+                    </li>
+                    <li class="active">
+                        <a href="/adminRevisores"> Revisores </a>
+                    </li>
+                </ul>
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="main">
+            <button type="button" id="sidebarCollapse" class="btn btn-light">
+                <img src="/img/univaLogo.png" alt="" class="univa-logo"> MENU
+            </button>
+            <span>Datos Personales</span>
+            <span id="logout"><a href="/logout">Cerrar Sesión</a></span>
+            <br> <br> <br>
+
+            <div class="titulo-datos"></div>
+
+             <table class="table" id="tabla-postulacion">
+                        <tbody>
+                            <tr class="thead-light">
+                                <th scope="row" colspan="2">
+                                    Nombre <br>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <%= datos[0].nombre_revisor %>
+                                </td>
+                            </tr>
+                            
+                            <tr class="thead-light">
+                                <th scope="row" colspan="2">
+                                    Teléfono de oficina <br>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <%= datos[0].telefono_oficina %>
+                                </td>
+                            </tr>
+                            <tr class="thead-light">
+                                <th scope="row" colspan="2">
+                                    Teléfono celular <br>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <%= datos[0].telefono_celular %>
+                                </td>
+                            </tr>
+                            <tr class="thead-light">
+                                <th scope="row" colspan="2">
+                                    Sexo <br>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                   <%= datos[0].sexo %>
+                                </td>
+                            </tr>
+                            <tr class="thead-light">
+                                <th scope="row" colspan="2">
+                                    Fecha de nacimiento <br>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <%= datos[0].fecha_nacimiento %>
+                                </td>
+                            </tr>
+                            <tr class="thead-light">
+                                <th scope="row" colspan="2">
+                                    Link con curriculum <br>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <%= datos[0].curriculum %>
+                                </td>
+                            </tr>
+                             <tr class="thead-light">
+                                <th scope="row" colspan="2">
+                                    Perfil de LinkedIn o Facebook <br>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <%= datos[0].facebook %>
+                                </td>
+                            </tr>
+                             <tr class="thead-light">
+                                <th scope="row" colspan="2">
+                                    Temas <br>
+                                </th>
+                            </tr>
+                                <% if(temas){%>
+                                     <% temas.forEach((element) => { %>
+                                     <tr>
+                                          <td>
+                                             <%= element.tema %>
+                                         </td>
+                                     </tr>
+                                 <% }); } %>
+
+                            <tr class="thead-light">
+                                <th scope="row" colspan="2">
+                                    Comentarios
+                                </th>
+                            </tr>
+
+                            <tr>
+                                  <td scope="row">
+                                      <textarea rows="6" class="form-control" disabled>
+                                         <%= comentarios[0].comentario %>
+                                    </textarea>
+                                  </td>
+                            </tr>
+                            
+                        </tbody>
+                     </table>
+        </div>
+
+        <!-- jQuery CDN - Slim version (=without AJAX) -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+        <!-- Popper.JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+            crossorigin="anonymous"></script>
+        <!-- Bootstrap JS -->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
+            crossorigin="anonymous"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#sidebarCollapse').on('click', function () {
+                    $('#sidebar').toggleClass('active');
+                });
+            });
+        </script>
+    </div>
+    </body>
+</html>
